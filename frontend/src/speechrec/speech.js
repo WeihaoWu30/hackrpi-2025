@@ -8,12 +8,12 @@ const run = async() => {
    });
 
    const transcriber = client.streaming.transcriber({
-      sampleRate: 24.00,
+      sampleRate: 16000,
       formatTurns : true,
       endOfTurnConfidenceThreshold : 0.7,
       minEndOfTurnSilenceWhenConfident: 160,
       maxTurnSilence: 2400,
-      keyterms : [],
+      keytermsPrompt : [],
       language:"en"
    });
 
@@ -25,15 +25,45 @@ const run = async() => {
       console.log("Error", err);
    });
 
-   transcriber.on("turn", (turn)=>{
-      if (!turn.transcript){
+   transcriber.on("partial transcripts", (msg)=>{
+      if (!msg.transcript){
          return;
       }
 
-      console.log("Transcript" + turn.transcript);
+      console.log("Partial Transcript" + msg.transcript);
    });
+
+   transcriber.on("final transcript", (msg)=>{
+      if (!msg.transcript){
+         return;
+      }
+      console.log("Final Transcript" + msg.transcript);
+   });
+
 
    transcriber.on("close", (code, reason)=>{
       console.log("closed", code, reason);
    });
-}
+
+   try{
+      await transcriber.connect();
+      console.log("started recording");
+
+      const recording = recorder.record({
+         channels: 1,
+         sampleRate: 16000,
+         audioType: "wav"
+      });
+
+      Readable.toWeb(recording.stream()).pipeTo(transcriber.stream());
+      process.on("SIGINT", async function(){
+         recording.stop();
+         transcriber.close();
+         process.exit();
+      });
+   }catch(err){
+      console.error(err);
+   }
+};
+
+run();
