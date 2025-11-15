@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function Form() {
+function Form(props) {
   const [name, setName] = useState("");
 
   const handleChange = (event) => {
@@ -16,7 +16,7 @@ function Form() {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Name:
+        {props.title}
         <input type="text" value={name} onChange={handleChange} />
       </label>
       <button type="submit">Submit</button>
