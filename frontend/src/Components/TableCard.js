@@ -12,10 +12,10 @@ function TableCard(props) {
   )); // single patient object
 
   return (
-    <detials className="labs-card">
-      <summary>
-      <h2><i className="fa-solid fa-flask"></i> Past Labs</h2>
-      </summary>
+    <section className="labs-card">
+      <h2>
+        <i className="fa-solid fa-flask"></i> Past Labs
+      </h2>
       <table className="labs-table">
         <thead>
           <tr>
@@ -27,7 +27,7 @@ function TableCard(props) {
         </thead>
         <tbody>{patient}</tbody>
       </table>
-    </detials>
+    </section>
   );
 }
 
