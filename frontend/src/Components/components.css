@@ -173,6 +173,11 @@ body {
   color: #2d89ef;
 }
 
-.no-list{
+li{
   list-style-type: none;
+}
+
+.image{
+  width: 10em;
+  height: 10em;
 }
