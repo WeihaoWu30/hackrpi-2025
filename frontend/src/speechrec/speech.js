@@ -1,6 +1,7 @@
 import { AssemblyAI } from "assemblyai";
 import { Readable} from "stream";
 import recorder from "node-record-lpcm16";
+import { pipeline } from "stream";
 
 const run = async() => {
    const client = new AssemblyAI({
@@ -11,9 +12,9 @@ const run = async() => {
       sampleRate: 16000,
       formatTurns : true,
       endOfTurnConfidenceThreshold : 0.7,
-      minEndOfTurnSilenceWhenConfident: 160,
+      minEndOfTurnSilenceWhenConfident: 800,
       maxTurnSilence: 2400,
-      keytermsPrompt : [],
+      keytermsPrompt : ["cancer", "patient"],
       language:"en"
    });
 
@@ -25,45 +26,74 @@ const run = async() => {
       console.log("Error", err);
    });
 
-   transcriber.on("partial transcripts", (msg)=>{
+   // transcriber.on("partial_transcript", (msg)=>{
+   //    if (!msg.transcript){
+   //       return;
+   //    }
+   //    console.log("Partial Transcript", msg.transcript);
+   // });
+
+   // transcriber.on("final_transcript", (msg)=>{
+   //    if (!msg.transcript){
+   //       return;
+   //    }
+   //    console.log("Final Transcript" + msg.transcript);
+   // });
+
+   transcriber.on("turn", (msg)=>{
       if (!msg.transcript){
          return;
       }
-
-      console.log("Partial Transcript" + msg.transcript);
-   });
-
-   transcriber.on("final transcript", (msg)=>{
-      if (!msg.transcript){
-         return;
+      if (msg.end_of_turn && msg.turn_is_formatted){
+         let summary = msg.words;
+         let final_transcript = "";
+         for (const word of summary){
+            final_transcript+= word.text;
+            final_transcript += " ";
+         }
+         console.log(final_transcript);
       }
-      console.log("Final Transcript" + msg.transcript);
    });
 
 
    transcriber.on("close", (code, reason)=>{
       console.log("closed", code, reason);
    });
+   async function speech_to_text(){
+      try{
+         await transcriber.connect();
+         console.log("started recording");
 
-   try{
-      await transcriber.connect();
-      console.log("started recording");
+         const recording = recorder.record({
+            channels: 1,
+            sampleRate: 16000,
+            audioType: "wav"
+         });
 
-      const recording = recorder.record({
-         channels: 1,
-         sampleRate: 16000,
-         audioType: "wav"
-      });
-
-      Readable.toWeb(recording.stream()).pipeTo(transcriber.stream());
-      process.on("SIGINT", async function(){
-         recording.stop();
-         transcriber.close();
-         process.exit();
-      });
-   }catch(err){
-      console.error(err);
+         // Readable.toWeb(recording.stream()).pipeTo(transcriber.stream());
+         pipeline(
+            recording.stream(),
+            transcriber.stream(),
+            (err)=>{
+               if (err){
+                  console.log("Error", err);
+               }
+            }
+         )
+         process.on("SIGINT", async function(){
+            recording.stop();
+            transcriber.close();
+            process.exit();
+         });
+      }catch(err){
+         console.error(err);
+      }
    }
+
+   async function process_speech(){
+      await speech_to_text();
+   }
+process_speech();
 };
 
 run();
