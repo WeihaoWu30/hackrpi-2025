@@ -126,21 +126,28 @@ export default function Speech(){
       //  source.connect(processor);
       //  processor.connect(audioContext.destination);
 
-      //  mediaRecorder.ondataavailable = async(e) =>{
-      //    if (e.data.size > 0){
-      //       const arrayBuffer = await e.data.arrayBuffer();
-      //       const audioBlob = new Blob([arrayBuffer]);
-      //       // console.log("it works");
-      //       ws.send(arrayBuffer);
-      //    }
-      // };
-      // mediaRecorder.start(100);
-   }
+    //  mediaRecorder.ondataavailable = async(e) =>{
+    //    if (e.data.size > 0){
+    //       const arrayBuffer = await e.data.arrayBuffer();
+    //       const audioBlob = new Blob([arrayBuffer]);
+    //       // console.log("it works");
+    //       ws.send(arrayBuffer);
+    //    }
+    // };
+    // mediaRecorder.start(100);
+  };
 
-   return(
-      <div>
-         <button onClick={startRecording}>Start Recording</button>
-         <p>{transcript}</p>
-      </div>
-   )
+  return (
+    <div className="record-container">
+      <button className="record" onClick={startRecording}>
+        Start Recording
+        {isRecording ? (
+          <i className="fa fa-microphone-slash" aria-hidden="true"></i>
+        ) : (
+          <i className="fa fa-microphone" aria-hidden="true"></i>
+        )}
+      </button>
+      <p>{transcript}</p>
+    </div>
+  );
 }

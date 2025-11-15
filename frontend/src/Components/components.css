@@ -143,7 +143,7 @@ body {
 .labs-card {
   background: white;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -177,8 +177,14 @@ body {
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-5px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Existing table styles (ensure these are present) */
@@ -188,7 +194,8 @@ body {
   margin-top: 1rem;
 }
 
-.labs-table th, .labs-table td {
+.labs-table th,
+.labs-table td {
   border: 1px solid #ddd;
   padding: 0.75rem;
   text-align: left;
@@ -199,11 +206,11 @@ body {
   color: #2d89ef;
 }
 
-li{
+li {
   list-style-type: none;
 }
 
-.image{
+.image {
   width: 10em;
   height: 10em;
 }
@@ -279,10 +286,44 @@ form button[type="submit"]:active {
   background-color: #1f6391;
   transform: translateY(1px);
 }
-.form-conaine{
-    display: flex;
+.form-conaine {
+  display: flex;
   justify-content: center;
   align-items: center;
   min-height: 80vh;
   padding: 20px;
+}
+.record-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.record {
+  background-color: #e74c3c;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.record i {
+  font-size: 18px;
+}
+
+.record:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(231, 76, 60, 0.4);
+}
+
+.record:active {
+  transform: scale(0.98);
 }

@@ -1,19 +1,19 @@
-const express = require("express");
+import express from "express";
+import { fetchAllPatientData, fetchPatientData, modifyPatientData, insertPatient, messageAI } from "../controllers/controller.js";
+
 const router = express.Router();
 
 // Fetch All Patients
-router.get("/patient", () => {});
+router.get("/patient", fetchAllPatientData);
 // Fetch One Patient
-router.get("/patient/:id", () => {});
+router.get("/patient/:id", fetchPatientData);
 // Modify One Patient
-router.patch("/patient/:id", () => {});
-// Add A Message
-router.post("/message", () => {});
-// Pull Messages (Uses Query Parameters)
-router.get("/message", () => {});
-// Ask AI For Summary
-router.post("/scribe", () => {});
+router.patch("/patient/:id", modifyPatientData);
+// Add A Patient
+router.post("/patient", insertPatient);
+// AI
+router.post("/scribe", messageAI);
 // if time permits, ai automatic fillout form
-router.post("/fill", () => {});
+// router.post("/fill", () => {});
 
-module.exports = router;
+export default router;
