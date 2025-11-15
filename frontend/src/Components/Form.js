@@ -8,10 +8,6 @@ function Form({ children }) {
     phone: "",
     email: "",
     address: " ",
-    pressure:"",
-    heartrate:"",
-    temp:"",
-    resprate:"",
   });
 
   const handleChange = (event) => {
@@ -91,47 +87,6 @@ function Form({ children }) {
           onChange={handleChange}
         />
       </label>
-
-      <label>
-        Blood Pressure:
-        <input
-          type="number"
-          name="pressure"
-          value={formData.pressure}
-          onChange={handleChange}
-        />
-      </label>
-
-      <label>
-        Heart Rate:
-        <input
-          type="number"
-          name="heartrate"
-          value={formData.heartrate}
-          onChange={handleChange}
-        />
-      </label>
-
-      <label>
-        Temperature:
-        <input
-          type="number"
-          name="temp"
-          value={formData.temp}
-          onChange={handleChange}
-        />
-      </label>
-
-      <label>
-        Respiratory Rate:
-        <input
-          type="number"
-          name="resprate"
-          value={formData.resprate}
-          onChange={handleChange}
-        />
-      </label>
-
       <button type="submit">Submit</button>
     </form>
   );
