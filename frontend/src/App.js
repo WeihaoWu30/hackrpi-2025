@@ -78,6 +78,7 @@ function App() {
   return (
     <main className="container">
       {renderPatients}
+      <Speech></Speech>
     </main>
   );
 }
