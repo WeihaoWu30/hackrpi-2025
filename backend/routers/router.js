@@ -1,5 +1,5 @@
 import express from "express";
-import { fetchAllPatientData, fetchPatientData, modifyPatientData, insertPatient, messageAI } from "../controllers/controller.js";
+import { fetchAllPatientData, fetchPatientData, modifyPatientData, insertPatient, fetchMessages, messageAI, sendAlert } from "../controllers/controller.js";
 
 const router = express.Router();
 
@@ -11,8 +11,12 @@ router.get("/patient/:id", fetchPatientData);
 router.patch("/patient/:id", modifyPatientData);
 // Add A Patient
 router.post("/patient", insertPatient);
+// Fetch Messages
+router.get("/message", fetchMessages);
 // AI
 router.post("/scribe", messageAI);
+// SSE
+router.get("/events", sendAlert);
 // if time permits, ai automatic fillout form
 // router.post("/fill", () => {});
 
