@@ -1,0 +1,120 @@
+/* homescreen.css */
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  margin: 0;
+  background-color: #f4f6f9;
+  color: #333;
+}
+
+.header {
+  background-color: #2d89ef;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Patient Card */
+.patient-card {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.patient-info {
+  text-align: center;
+}
+
+.patient-name {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: #2d89ef;
+}
+
+.patient-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #2d89ef;
+}
+
+/* Vitals Dashboard */
+.vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.vital-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.vital-card:hover {
+  transform: translateY(-5px);
+}
+
+.vital-icon {
+  font-size: 3rem;
+}
+
+.vital-info h3 {
+  margin: 0;
+  color: #2d89ef;
+}
+
+.vital-info p {
+  margin: 0.3rem 0 0 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Icon Colors */
+.bp { color: #ff9800; }
+.hr { color: #e91e63; }
+.temp { color: #f44336; }
+.resp { color: #4caf50; }
+
+/* Generic Card */
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  margin-top: 0;
+  color: #2d89ef;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card li {
+  margin: 0.5rem 0;
+}
