@@ -2,11 +2,8 @@ import "./components.css";
 
 function Card(props) {
   const patientInfo = props.array.map((patient, index) => (
-    <li
-      key={index}
-      className={patient.important ? "important" : "no-list"} // conditional class
-    >
-      {patient.info}
+    <li key={index}>
+      {patient.important ? <strong>{patient.info}</strong> : patient.info}
     </li>
   ));
 
