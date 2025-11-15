@@ -297,6 +297,7 @@ form button[type="submit"]:active {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 .record {
   background-color: #e74c3c;
