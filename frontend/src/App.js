@@ -1,6 +1,7 @@
 import Form from "./Components/Form.js";
 import Card from "./Components/Card.js";
 import PatientCard from "./Components/Profile.js";
+import Speech from "./Components/Speech.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Components/components.css";
 
@@ -42,6 +43,7 @@ function App() {
     <main className="container">
       <PatientCard patient={patients[0]} />
       {patientInfo}
+      <Speech/>
     </main>
   );
 }
