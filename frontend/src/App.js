@@ -1,6 +1,7 @@
 import ClinicalCard from "./Components/ClinicalCard.js";
 import Card from "./Components/Card.js";
 import PatientCard from "./Components/Profile.js";
+import Speech from "./Components/Speech.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Components/components.css";
 import React from "react";
@@ -77,6 +78,7 @@ function App() {
   return (
     <main className="container">
       {renderPatients}
+      <Speech></Speech>
     </main>
   );
 }
