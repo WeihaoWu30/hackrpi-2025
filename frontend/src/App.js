@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import Form from "./Components/Form.js";
+import Card from "./Components/Card.js";
+
+import "./App.css";
 
 function App() {
+  const patients = [
+    { info: "aaaa", important: true },
+    { info: "bbbbb", important: false },
+  ];
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Card title="blood pressure" array={patients} />
+      <Card title="allergies" array={patients} />
     </div>
   );
 }
