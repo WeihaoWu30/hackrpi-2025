@@ -1,0 +1,288 @@
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  margin: 0;
+  background-color: #f4f6f9;
+  color: #333;
+}
+
+.header {
+  background-color: #2d89ef;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Patient Card */
+.patient-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.patient-info {
+  text-align: center;
+}
+
+.patient-name {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: #2d89ef;
+}
+
+.patient-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #2d89ef;
+}
+
+.patient-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Vitals Dashboard */
+.vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.vital-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.vital-card:hover {
+  transform: translateY(-5px);
+}
+
+.vital-icon {
+  font-size: 3rem;
+}
+
+.vital-info h3 {
+  margin: 0;
+  color: #2d89ef;
+}
+
+.vital-info p {
+  margin: 0.3rem 0 0 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Icon Colors */
+.bp {
+  color: #ff9800;
+}
+.hr {
+  color: #e91e63;
+}
+.temp {
+  color: #f44336;
+}
+.resp {
+  color: #4caf50;
+}
+
+/* Clinical Summary Grid */
+.clinical-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card h2 {
+  margin-top: 0;
+  color: #2d89ef;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.summary-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.summary-card li {
+  margin: 0.5rem 0;
+}
+
+/* Labs Accordion */
+.labs-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+/* Clickable header */
+.labs-card summary {
+  padding: 1.5rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+
+/* Hide default marker */
+.labs-card summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Heading styling inside summary */
+.labs-card h2 {
+  margin: 0;
+  color: #2d89ef;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Table animation when opened */
+.labs-card[open] table {
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Existing table styles (ensure these are present) */
+.labs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.labs-table th, .labs-table td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.labs-table th {
+  background-color: #f0f4f8;
+  color: #2d89ef;
+}
+
+li{
+  list-style-type: none;
+}
+
+.image{
+  width: 10em;
+  height: 10em;
+}
+
+/* Form Container */
+form {
+  background-color: #ffffff;
+  padding: 25px;
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+}
+
+/* Children elements (like h1, p, etc.) */
+form h1 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 24px;
+}
+
+form p {
+  margin: 0 0 15px 0;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* Label */
+form label {
+  display: block;
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: #34495e;
+  font-size: 16px;
+}
+
+/* Input Field */
+form input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 2px solid #e0e0e0;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+form input[type="text"]:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* Submit Button */
+form button[type="submit"] {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+form button[type="submit"]:hover {
+  background-color: #2980b9;
+}
+
+form button[type="submit"]:active {
+  background-color: #1f6391;
+  transform: translateY(1px);
+}
+.form-conaine{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
