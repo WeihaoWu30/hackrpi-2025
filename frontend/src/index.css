@@ -11,3 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Navigation Links */
+.doctor-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #1e61a5;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.doctor-info p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.doctor-info a {
+  text-decoration: none;
+  color: white;
+  padding: 8px 16px;
+  margin-left: 10px;
+  background-color: #3498db;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+.doctor-info a:hover {
+  background-color: #2980b9;
+}
+
+.doctor-info a:active {
+  background-color: #1f6391;
+}

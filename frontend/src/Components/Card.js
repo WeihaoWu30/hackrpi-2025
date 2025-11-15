@@ -2,9 +2,9 @@ import "./components.css";
 
 // BULLET UNSUPORTED
 function Card(props) {
-  const patientInfo = props.array.map((patient, index) => (
+  return props.array.map((patient, index) => (
     <div class="vital-card" key={index}>
-      <i class="fa-solid fa-stethoscope vital-icon bp"></i>
+      <i class={patient.icon}></i>
       <div class="vital-info">
         <h3>{patient.type}</h3>
         <p>{patient.value}</p>
@@ -12,9 +12,6 @@ function Card(props) {
     </div>
   ));
 
-  return (
-    <section>:{patientInfo}</section>
-  );
 }
 
 //asdas

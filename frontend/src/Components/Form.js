@@ -1,24 +1,60 @@
 import { useState } from 'react';
 
-function Form(props) {
-  const [name, setName] = useState("");
+function Form({ children }) {
+  const [formData, setFormData] = useState({
+    patientName: "",
+    patientId: "",
+    age: ""
+  });
 
   const handleChange = (event) => {
-    setName(event.target.value);
+    const { name, value } = event.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default browser form submission
-    console.log("Submitted name:", name);
-    // Perform actions with the submitted data
+    event.preventDefault();
+    console.log("Submitted data:", formData);
+    // Send formData to backend or process it
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {children}
+      
       <label>
-        {props.title}
-        <input type="text" value={name} onChange={handleChange} />
+        Patient Name:
+        <input 
+          type="text" 
+          name="patientName"
+          value={formData.patientName} 
+          onChange={handleChange} 
+        />
       </label>
+
+      <label>
+        Patient ID:
+        <input 
+          type="text" 
+          name="patientId"
+          value={formData.patientId} 
+          onChange={handleChange} 
+        />
+      </label>
+
+      <label>
+        Age:
+        <input 
+          type="number" 
+          name="age"
+          value={formData.age} 
+          onChange={handleChange} 
+        />
+      </label>
+
       <button type="submit">Submit</button>
     </form>
   );
