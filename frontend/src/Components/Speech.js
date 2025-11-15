@@ -4,7 +4,7 @@ import { useRef } from 'react';
 
 export default function Speech(){
    const [transcript, setTranscript] = useState("");
-   const [isRecoding, setRecording] = useState(false);
+   const [isRecording, setRecording] = useState(false);
 
    const ws = useRef(null);
    const stream = useRef(null);
@@ -20,7 +20,7 @@ export default function Speech(){
       // const source = audioContext.createMediaStreamSource(stream);
       // const processor = audioContext.createScriptProcessor(4096, 1, 1);
       
-      if(isRecoding) {
+      if(isRecording) {
          setRecording(false);
          ws.current?.close();
          stream.current?.getTracks().forEach(track => track.stop());
@@ -56,11 +56,7 @@ export default function Speech(){
    
          }
    
-         // const mediaRecorder = new MediaRecorder(stream, {mimeType: "audio/webm"});
-   
-         // const audioContext = new AudioContext({sampleRate: 16000});
-         // const source = audioContext.createMediaStreamSource(stream);
-         // const processor = audioContext.createScriptProcessor(4096, 1, 1);
+
    
          processor.current.onaudioprocess = (event) => {
             const inputData = event.inputBuffer.getChannelData(0); // Float32Array
@@ -80,61 +76,6 @@ export default function Speech(){
           source.current.connect(processor.current);
           processor.current.connect(audioContext.current.destination);
       }
-      // ws.onmessage = (msg) =>{
-      //    try{
-      //       console.log(msg.data);
-      //       const message = JSON.parse(msg.data);
-      //       console.log(message.type);
-      //       if (message.type == "Turn" && message.end_of_turn){
-      //          // console.log("isjfklasfjsaklfas");
-      //          // console.log(msg.data);
-      //          setTranscript(prev => prev + message.transcript);
-      //          // console.log(message.transcript);
-      //       }
-      //       else{
-      //          console.log("fuck this");
-      //       }
-
-      //    }catch(err){
-      //       console.log("Error", err);
-      //    }
-
-
-      // }
-
-      // const mediaRecorder = new MediaRecorder(stream, {mimeType: "audio/webm"});
-
-      // const audioContext = new AudioContext({sampleRate: 16000});
-      // const source = audioContext.createMediaStreamSource(stream);
-      // const processor = audioContext.createScriptProcessor(4096, 1, 1);
-
-      // processor.onaudioprocess = (event) => {
-      //    const inputData = event.inputBuffer.getChannelData(0); // Float32Array
-      //    const buffer = new ArrayBuffer(inputData.length * 2); // PCM16
-      //    const view = new DataView(buffer);
-   
-      //    for (let i = 0; i < inputData.length; i++) {
-      //      let s = Math.max(-1, Math.min(1, inputData[i]));
-      //      view.setInt16(i * 2, s < 0 ? s * 0x8000 : s * 0x7fff, true);
-      //    }
-   
-      //    if (ws.readyState === WebSocket.OPEN) {
-      //      ws.send(buffer);
-      //    }
-      //  };
-
-      //  source.connect(processor);
-      //  processor.connect(audioContext.destination);
-
-    //  mediaRecorder.ondataavailable = async(e) =>{
-    //    if (e.data.size > 0){
-    //       const arrayBuffer = await e.data.arrayBuffer();
-    //       const audioBlob = new Blob([arrayBuffer]);
-    //       // console.log("it works");
-    //       ws.send(arrayBuffer);
-    //    }
-    // };
-    // mediaRecorder.start(100);
   };
 
   return (
