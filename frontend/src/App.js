@@ -74,7 +74,11 @@ function App() {
     </React.Fragment>
   ));
 
-  return <main className="container">{renderPatients}</main>;
+  return (
+    <main className="container">
+      {renderPatients}
+    </main>
+  );
 }
 
 export default App;

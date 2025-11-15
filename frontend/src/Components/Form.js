@@ -8,13 +8,13 @@ function Form(props) {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default browser form submission
+    event.preventDefault();
     console.log("Submitted name:", name);
-    // Perform actions with the submitted data
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {props.children}  {/* Add this line to render children */}
       <label>
         {props.title}
         <input type="text" value={name} onChange={handleChange} />

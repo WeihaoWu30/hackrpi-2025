@@ -155,6 +155,31 @@ body {
   gap: 0.5rem;
 }
 
+/* Style the summary header */
+.labs-card summary {
+  padding: 1.5rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+
+/* Hide default arrow marker */
+.labs-card summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Animate the dropdown content */
+.labs-card[open] table {
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .labs-table {
   width: 100%;
   border-collapse: collapse;
