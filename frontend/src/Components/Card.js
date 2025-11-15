@@ -1,21 +1,21 @@
 import "./components.css";
 
+// BULLET UNSUPORTED
 function Card(props) {
   const patientInfo = props.array.map((patient, index) => (
-    <li key={index}>
-      {patient.important ? <strong>{patient.info}</strong> : patient.info}
-    </li>
+    <div class="vital-card" key={index}>
+      <i class="fa-solid fa-stethoscope vital-icon bp"></i>
+      <div class="vital-info">
+        <h3>{patient.type}</h3>
+        <p>{patient.value}</p>
+      </div>
+    </div>
   ));
 
   return (
-    <div className="vital-card">
-      <i className="fa-solid fa-stethoscope vital-icon bp"></i>
-      <div className="vital-info">
-        <h2>{props.title}</h2>
-        <ul>{patientInfo}</ul>
-      </div>
-    </div>
+    <section>:{patientInfo}</section>
   );
 }
 
+//asdas
 export default Card;
