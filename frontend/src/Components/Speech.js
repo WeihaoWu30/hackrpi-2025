@@ -6,7 +6,7 @@ export default function Speech(){
    const startRecording = async(e) =>{
       e.preventDefault();
       const stream = await navigator.mediaDevices.getUserMedia({audio: true});
-      const ws = new WebSocket("wss://streaming.assemblyai.com/v3/ws?sample_rate=16000&token=11d1916f92be445e9df2d2f26d2d11d5");
+      const ws = new WebSocket(`wss://streaming.assemblyai.com/v3/ws?sample_rate=16000&token=${process.env.REACT_APP_ASSEMBLY_API_KEY}`);
       
       // ws.onopen = () =>{
       //    // ws.send(JSON.stringify({
