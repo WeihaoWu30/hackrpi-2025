@@ -327,3 +327,43 @@ form button[type="submit"]:active {
 .record:active {
   transform: scale(0.98);
 }
+
+/* Extra spacing for Allergies and Labs sections */
+form .allergies-section,
+form .labs-section {
+  margin-bottom: 25px;
+}
+
+/* Space above Allergies section */
+form .allergies-section {
+  margin-top: 25px;
+}
+
+/* Space between Add Labs button and Submit */
+form .labs-section button[type="button"] {
+  margin-bottom: 20px;
+}
+
+/* Make Add buttons match Submit button style */
+form button[type="button"] {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+form button[type="button"]:hover {
+  background-color: #2980b9;
+}
+
+form button[type="button"]:active {
+  background-color: #1f6391;
+  transform: translateY(1px);
+}

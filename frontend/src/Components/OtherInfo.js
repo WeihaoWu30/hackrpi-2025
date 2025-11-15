@@ -5,8 +5,8 @@ const OtherInfo = () => {
   const [allergies, setAllergies] = useState([""]);
   const [labs, setLabs] = useState([""]);
 
-  const handleChange = (setter, index, value) => {
-    const updated = [...setter];
+  const handleChange = (values, setter, index, value) => {
+    const updated = [...values];
     updated[index] = value;
     setter(updated);
   };
@@ -26,7 +26,7 @@ const OtherInfo = () => {
           key={i}
           type="text"
           value={val}
-          onChange={(e) => handleChange(setter, i, e.target.value)}
+          onChange={(e) => handleChange(values, setter, i, e.target.value)}
         />
       ))}
       <button type="button" onClick={() => addField(setter)}>
@@ -41,8 +41,14 @@ const OtherInfo = () => {
       <p>Record medications, allergies, and labs</p>
 
       {renderFields("Medications", medications, setMedications)}
-      {renderFields("Allergies", allergies, setAllergies)}
-      {renderFields("Labs", labs, setLabs)}
+
+      <div className="allergies-section">
+        {renderFields("Allergies", allergies, setAllergies)}
+      </div>
+
+      <div className="labs-section">
+        {renderFields("Labs", labs, setLabs)}
+      </div>
 
       <button type="submit">Save</button>
     </form>
