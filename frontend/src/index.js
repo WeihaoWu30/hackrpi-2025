@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import FormApp from "./FormApp";
+import ChatRoom from "./ChatRoom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
@@ -15,13 +16,15 @@ root.render(
         <nav className="doctor-info">
           <p> Dr. Jeffrey Combs | General Medicine</p>
           <Link to="/form">Create Form</Link>{" "}
-          <Link to="/app">Patient Records</Link>
+          <Link to="/app">Clinical Records</Link>
+          <Link to="/chat">Message</Link>
         </nav>
       </header>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/app" element={<App />} />
         <Route path="/form" element={<FormApp />} />
+        <Route path="/chat" element={<ChatRoom />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
