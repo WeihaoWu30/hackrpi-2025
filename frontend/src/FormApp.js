@@ -1,11 +1,13 @@
 import Form from "./Components/Form";
 import FormTwo from "./Components/OtherInfo";
 import { Fragment } from "react/jsx-runtime";
+import { Header } from "./Components/Header";
 import "./App.css";
 
 function FormApp() {
   return (
-    <div style={{display:"flex", justifyContent:"center",alignItems:"center"}}>
+   <Header>
+      <div style={{display:"flex", justifyContent:"center",alignItems:"center"}}>
       <div className="form-container">
         <Form>
           <h1>Create New Patient</h1>
@@ -17,6 +19,8 @@ function FormApp() {
         <div></div>
       </div>
     </div>
+   </Header>
+
   );
 }
 
