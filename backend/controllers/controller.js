@@ -1,9 +1,12 @@
 import { collection, getDocs, doc, getDoc, updateDoc, addDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase.js";
 import { SYSTEM_MESSAGE } from "../constants/constants.js";
+import { GoogleGenAI } from "@google/genai"
 
-const ollamaAPI = "http://localhost:11434/api";
-const ollamaModel = "gpt-oss:120b-cloud";
+const ai = new GoogleGenAI({});
+const model = "gemini-2.0-flash";
+// const ollamaAPI = "http://localhost:11434/api";
+// const ollamaModel = "gpt-oss:120b-cloud";
 
 // follow this format for the rest of the controllers
 export const fetchAllPatientData = async(_, res) => {
@@ -15,7 +18,7 @@ export const fetchAllPatientData = async(_, res) => {
 
       const payload = { patients: [] };
       const querySnapshots = await getDocs(collectionRef);
-      querySnapshots.forEach((doc) => payload.push_back(doc.data()));
+      querySnapshots.forEach((doc) => payload.patients.push({ ...doc.data(), patient_id: doc.id}));
       
       res.status(200).json(payload);
    } catch(e) {
@@ -26,13 +29,13 @@ export const fetchAllPatientData = async(_, res) => {
 
 export const fetchPatientData = async (req, res) => { 
    try {
-      const docRef = doc(db, "patients", req.id);
+      const docRef = doc(db, "patients", req.params.id);
       if(!doc) {
          return res.status(400).json({ error: "Patient Does Not Exist" });
       }
 
       const payload = await getDoc(docRef);
-      if(payload.exists()) res.status(200).json(payload.data());
+      if(payload.exists()) res.status(200).json({ ...payload.data(), patient_id: payload.id});
       else res.status(500).json({ error: "Could Not Find Patient Information" });
    } catch(error) {
       console.log(error.message);
@@ -47,12 +50,14 @@ export const modifyPatientData = async (req, res) => {
          return res.status(400).json({ error: "Missing Updates" });
       }
 
-      const docRef = doc(db, "patients", req.id);
-      if(!doc) {
+      const docRef = doc(db, "patients", req.params.id);
+      const docSnap = await getDoc(docRef);
+      if(!docSnap.exists()) {
          return res.status(400).json({ error: "Patient Does Not Exist" });
       }
 
-      const payload = await updateDoc(docRef, data);
+      await updateDoc(docRef, data);
+      const payload = await getDoc(docRef);
       res.status(200).json(payload.data());
    } catch(error) {
       console.log(error);
@@ -89,7 +94,7 @@ export const fetchMessages = async (req, res) => {
 
       const querySnapshots = await getDocs(q);
       const payload = { messages: [] };
-      querySnapshots.forEach((doc) => payload.messages.push_back(doc.data()));
+      querySnapshots.forEach((doc) => payload.messages.push(doc.data()));
       res.status(200).json(payload);
    } catch(error) {
       console.log(error);
@@ -103,13 +108,44 @@ export const messageAI = async (req, res) => {
       if(!data) {
          return res.status(400).json({ error: "Missing Transcript" });
       }
-      const chunks = data.split("", 500);
+      const chunks = [];
+      for(let i = 0;i < data.transcript.length;i += 500) {
+         chunks.push({
+            text: data.transcript.substr(i, 500),
+         });
+      }
+      const response = await ai.models.generateContent({
+         model,
+         contents: [{
+            role: "user",
+            parts: chunks,
+         }],
+         config: {
+            systemInstruction: SYSTEM_MESSAGE.content,
+            stream: false
+         }
+      });
+
+      const collectionRef = collection(db, "logs");
+      await addDoc(collectionRef, {
+         transcript: chunks,
+         modelResponse: response.text,
+         timestamp: new Date().toLocaleString(),
+         model: "gemini-2.0-flash",
+      });
+      res.status(200).json({ content: response.text });
+   } catch(error) {
+      console.log(error.message);
+      res.status(400).json(error);
+   }
+      /*
+      const chunks = data.transcript.split(` `);
       const formatted = chunks.map((chunk) => {
          return { role: "user", content: chunk };
       });
       const response = await fetch(ollamaAPI + "/chat", {
          method: "POST",
-         body: JSON.stringifiy({
+         body: JSON.stringify({
             model: ollamaModel,
             messages: [
                SYSTEM_MESSAGE,
@@ -117,16 +153,24 @@ export const messageAI = async (req, res) => {
             ],
             stream: false,
          }),
-      }).then(async (end) => await end.json());
-
+      });
       if(response.status === 200) {
-         res.status(200).json({ content: response.message.content });
+         const collectionRef = collection(db, "logs");
+         const data = await response.json();
+         await addDoc(collectionRef, {
+            transcript: chunks,
+            modelResponse: data.message.content,
+            timestamp: new Date().toLocaleString(),
+            model: ollamaModel,
+         });
+         res.status(200).json({ content: data.message.content });
       } else {
          res.status(500).json(response);
       }
    } catch(e) {
+      console.log(e.message);
       res.status(400).json(e);
-   }
+   }*/
 }
 
 export const sendAlert = (req, res) => {

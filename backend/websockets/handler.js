@@ -38,6 +38,7 @@ export const handleSockets = (wss) => {
                   src: ws.physicianName,
                   type: "new_message",
                   message: data.message,
+                  timestamp: data.timestamp,
                };
                const sortedField = [recipient.physicianName, ws.physicianName].sort();
                const collectionRef = collection(db, "messages");
