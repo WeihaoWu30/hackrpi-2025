@@ -39,10 +39,11 @@ export default function Speech() {
       stream.current?.getTracks().forEach((track) => track.stop());
       audioContext.current?.close();
       processor.current?.disconnect();
-      await fetch(process.env.REACT_APP_BACKEND + "/scribe", {
+      const response = await fetch(process.env.REACT_APP_BACKEND + "/scribe", {
         method: "POST",
         body: JSON.stringify({ transcript }),
       });
+      const data = await response.json();
       // clearTranscript();
     } else {
       clearTranscript();

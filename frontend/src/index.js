@@ -16,7 +16,7 @@ root.render(
   <React.StrictMode>
     <TranscriptProvider>
       <BrowserRouter>
-        <header class="header">
+        <header className="header">
           <h1>EHR System</h1>
           <nav className="doctor-info">
             <p> Dr. Jeffrey Combs | General Medicine</p>
