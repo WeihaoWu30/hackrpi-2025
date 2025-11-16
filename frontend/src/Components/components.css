@@ -248,7 +248,7 @@ form label {
 }
 
 /* Input Field */
-form input[type="text"] {
+form input{
   width: 100%;
   padding: 12px;
   margin-top: 8px;
@@ -259,7 +259,7 @@ form input[type="text"] {
   box-sizing: border-box;
 }
 
-form input[type="text"]:focus {
+form input:focus {
   outline: none;
   border-color: #3498db;
 }
@@ -286,7 +286,7 @@ form button[type="submit"]:active {
   background-color: #1f6391;
   transform: translateY(1px);
 }
-.form-conaine {
+.form-container {
   display: flex;
   justify-content: center;
   align-items: center;

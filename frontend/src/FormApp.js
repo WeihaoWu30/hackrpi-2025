@@ -1,26 +1,39 @@
 import Form from "./Components/Form";
-import FormTwo from "./Components/OtherInfo";
 import { Fragment } from "react/jsx-runtime";
 import { Header } from "./Components/Header";
 import "./App.css";
 
 function FormApp() {
-  return (
-   <Header>
-      <div style={{display:"flex", justifyContent:"center",alignItems:"center"}}>
-      <div className="form-container">
-        <Form>
-          <h1>Create New Patient</h1>
-          <p>Fill out the patient information below</p>
-        </Form>
-      </div>
-      <div className="form-container">
-        <FormTwo></FormTwo>
-        <div></div>
-      </div>
-    </div>
-   </Header>
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth", // smooth scroll
+    });
+  };
 
+  return (
+    <Header>
+      <button
+        onClick={scrollToBottom}
+        style={{ position: "sticky", top: "15vh" }}
+      >
+        Scroll to Bottom
+      </button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div className="form-container">
+          <Form>
+            <h1>Create New Patient</h1>
+            <p>Fill out the patient information below</p>
+          </Form>
+        </div>
+      </div>
+    </Header>
   );
 }
 

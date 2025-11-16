@@ -15,7 +15,7 @@ function PatientCard(props) {
         className="image"
       />
       <div className="patient-main">
-        <h2 className="patient-name">{patient?.name || "Unknown"}</h2>
+        <h2 className="patient-name">{patient?.patientName || "Unknown"}</h2>
 
         <div className="patient-meta">
           <span>
