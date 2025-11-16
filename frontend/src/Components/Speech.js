@@ -51,53 +51,6 @@ export default function Speech(){
    
    
          }
-   
-
-    if (isRecording) {
-      setRecording(false);
-      ws.current?.close();
-      stream.current?.getTracks().forEach((track) => track.stop());
-      audioContext.current?.close();
-      processor.current?.disconnect();
-      await fetch(process.env.REACT_APP_BACKEND, {
-        method: "POST",
-        body: JSON.stringify({ transcript }),
-      });
-      setTranscript("");
-    } else {
-      setRecording(true);
-      stream.current = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-      });
-      ws.current = new WebSocket(
-        "wss://streaming.assemblyai.com/v3/ws?sample_rate=16000&token=11d1916f92be445e9df2d2f26d2d11d5"
-      );
-      audioContext.current = new AudioContext({ sampleRate: 16000 });
-      source.current = audioContext.current.createMediaStreamSource(
-        stream.current
-      );
-      processor.current = audioContext.current.createScriptProcessor(
-        4096,
-        1,
-        1
-      );
-      ws.current.onmessage = (msg) => {
-        try {
-          console.log(msg.data);
-          const message = JSON.parse(msg.data);
-          console.log(message.type);
-          if (message.type == "Turn" && message.end_of_turn) {
-            // console.log("isjfklasfjsaklfas");
-            // console.log(msg.data);
-            setTranscript((prev) => prev + message.transcript + " ");
-            // console.log(message.transcript);
-          } else {
-            console.log("fuck this");
-          }
-        } catch (err) {
-          console.log("Error", err);
-        }
-      };
 
       processor.current.onaudioprocess = (event) => {
         const inputData = event.inputBuffer.getChannelData(0); // Float32Array
