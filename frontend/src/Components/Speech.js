@@ -29,8 +29,9 @@ export default function Speech() {
         method: "POST",
         body: JSON.stringify({ transcript }),
       });
-      clearTranscript();
+      // clearTranscript();
     } else {
+      clearTranscript();
       setRecording(true);
       stream.current = await navigator.mediaDevices.getUserMedia({
         audio: true,
