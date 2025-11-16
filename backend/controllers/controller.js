@@ -174,16 +174,16 @@ export const messageAI = async (req, res) => {
 }
 
 export const sendAlert = (req, res) => {
-   res.setHeaders("Content-Type", "text/event-stream");
-   res.setHeaders("Cache-Control", "no-cache");
-   res.setHeaders("Connection", "keep-alive");
+   res.setHeader("Content-Type", "text/event-stream");
+   res.setHeader("Cache-Control", "no-cache");
+   res.setHeader("Connection", "keep-alive");
    res.flushHeaders();
 
    const intervalID = setInterval(() => {
       const randomNumber = Math.floor(Math.random() * (999 - 100 + 1) + 100);
       console.log(randomNumber);
       res.write(`Emergency In Room ${randomNumber}\n`);
-   }, 30000);
+   }, 45000);
 
    req.on("close", (req, res) => {
       clearInterval(intervalID);
