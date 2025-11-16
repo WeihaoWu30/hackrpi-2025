@@ -26,6 +26,7 @@ export default function Speech(){
          stream.current?.getTracks().forEach(track => track.stop());
          audioContext.current?.close();
          processor.current?.disconnect();
+         await fetch(process.env.REACT_APP_BACKEND, {method: "POST", body: JSON.stringify({transcript})});
          setTranscript("");
       } else {
          setRecording(true);
