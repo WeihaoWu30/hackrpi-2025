@@ -148,7 +148,7 @@ export const sendAlert = (req, res) => {
       const appointment = new Date().toLocaleTimeString();
       console.log(appointment);
       res.write(`data: A new appointment has been scheduled on ${appointment}\n\n`);
-   }, 45000);
+   }, 60000);
 
    req.on("close", (req, res) => {
       clearInterval(intervalID);
