@@ -1,29 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function ChatRoom() {
   const [chatHistory, setChatHistory] = useState([]);
-  const [people, setPeople] = useState([]);
   const [message, setMessage] = useState("");
-  const ws = new WebSocket("ws://localhost:3001");
-  const [sender, setSender] = useState("");
-  const [recievedMessage, setRecievedMessage] = useState("");
+  const recipient = "Dr. Sean Adams";
+  const sender = "Dr. Jeffrey Combs"
+  const ws = new WebSocket("ws://localhost:3000");
 
-  const linkPeople = async () => {
-    ws.onopen = () => {
+  useEffect(() => {
+   const fetch = async() => {
+      const res = await fetch(process.env.REACT_APP_BACKEND + `/message?src=${"You"}&dst=${sender}`)
+   };
+  }, []);
+   ws.onopen = () => {
       console.log("WebSocket connected");
       const newMessage = {
-        type: "register",
-        src: "You",
+         type: "register",
+         src: sender,
       };
-    };
+      ws.send(JSON.stringify(newMessage))
+   };
 
-    ws.onmessage = async (msg) => {
-      const message = JSON.parse(msg);
-      setSender(message.src);
-      setRecievedMessage(message.message);
-    };
-  };
+   ws.onmessage = (msg) => {
+      const data = JSON.parse(msg);
+      setChatHistory(prev => [...prev, data]);
+   };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,7 +37,7 @@ function ChatRoom() {
         src: sender,
         timestamp: new Date().toLocaleTimeString(),
         type: "message",
-        dst: "Other Person",
+        dst: recipient,
       };
       ws.send(newMessage);
       setChatHistory((prev) => [...prev, newMessage]);
@@ -49,19 +52,14 @@ function ChatRoom() {
   return (
     <div>
       <div className="people-online">
-        <h3>Online ({people.length})</h3>
-        {people.map((person, index) => (
-          <span key={index} className="person">
-            {person}
-          </span>
-        ))}
+        <h3>{recipient}</h3>
       </div>
 
       <div className="chat-messages">
         {chatHistory.map((msg, index) => (
           <div key={index} className="message">
             <strong>{msg.src}</strong>
-            <p>{msg.text}</p>
+            <p>{msg.message}</p>
           </div>
         ))}
       </div>
