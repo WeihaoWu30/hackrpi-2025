@@ -7,6 +7,7 @@ import "./Components/components.css";
 import React, { Fragment } from "react";
 import { Header } from "./Components/Header.js";
 import { useState, useEffect } from "react";
+import PDFGenerator from "./GeneratePDF/generate.js";
 
 import "./App.css";
 import TableCard from "./Components/TableCard.js";
@@ -48,13 +49,15 @@ function App() {
 
   return (
     <>
-      <Header>
-        <main className="container">
-          {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-          <Speech></Speech>
-          {renderPatients}
-        </main>
-      </Header>
+    <PDFGenerator>
+         <Header>
+         <main className="container">
+            {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+            <Speech></Speech>
+            {renderPatients}
+         </main>
+         </Header>
+      </PDFGenerator>
     </>
   );
 }

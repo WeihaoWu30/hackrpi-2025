@@ -7,8 +7,9 @@ export default function PDFGenerator({ children }) {
    const handleExport = () => {
       const options = {
          filename: 'patient-info.pdf',
-         html2canvas:  { scale: 1, logging: true, dpi: 300, letterRendering: true },
-         jsPDF: {unit: 'in', format: 'letter', orientation: 'landscape'}
+         html2canvas:  { scale: 1, logging: true, dpi: 300, letterRendering: true},
+         jsPDF: {unit: 'in', format: 'letter', orientation: 'landscape'},
+         margin: 0.5
       };
 
       // Check if the ref is attached to an element before calling the library
@@ -23,7 +24,7 @@ export default function PDFGenerator({ children }) {
       <div>
          <div ref={elementRef}>{children}</div> 
          
-         <button onClick={handleExport}>Export Data</button> 
+         <button onClick={handleExport} style={{marginLeft: '45%', marginBottom: '5%'}}>Export Data</button> 
       </div>
    );
 }
