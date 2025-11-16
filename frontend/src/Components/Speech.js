@@ -43,7 +43,7 @@ export default function Speech(){
                if (message.type == "Turn" && message.end_of_turn){
                   // console.log("isjfklasfjsaklfas");
                   // console.log(msg.data);
-                  setTranscript(prev => prev + message.transcript + " ");
+                  setTranscript(prev => prev + message.transcript + ". ");
                   // console.log(message.transcript);
                }
                else{
