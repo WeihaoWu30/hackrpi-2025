@@ -10,11 +10,10 @@ import { useState, useEffect } from "react";
 import PDFGenerator from "./GeneratePDF/generate.js";
 
 import "./App.css";
-import TableCard from "./Components/TableCard.js";
 import AdditionalInfo from "./AdditionalInfo";
-
 function App() {
   const [data, setData] = useState([]);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,27 +35,73 @@ function App() {
     fetchData();
   }, []); // The empty dependency array ensures this runs only once on mount
 
-  const renderPatients = data?.map((patient, index) => (
-    <section key={index} style={{border:"#4AC7F4 2px solid"}}>
-      <PatientCard patient={patient} />
-      <section className="vitals-grid" style={{marginTop:"1em",marginBottom:"1em"}}>
-        <Card array={patient.vitals} />
+  const firstPatient = data?.[index]; // optional chaining in case data is undefined
+
+  const renderPatient = firstPatient && (
+    <section style={{ border: "#4AC7F4 2px solid" }}>
+      <PatientCard patient={firstPatient} />
+      <section
+        className="vitals-grid"
+        style={{ marginTop: "1em", marginBottom: "1em" }}
+      >
+        <Card array={firstPatient.vitals} />
       </section>
-      <ClinicalCard patient={patient} />
-      <AdditionalInfo patient={patient} />
+      <ClinicalCard patient={firstPatient} />
+      <AdditionalInfo patient={firstPatient} />
     </section>
-  ));
+  );
+  const switchCard = (i) => {
+    console.log("switching card");
+    setIndex(i);
+    <section style={{ border: "#4AC7F4 2px solid" }}>
+      <PatientCard patient={data[index]} />
+      <section
+        className="vitals-grid"
+        style={{ marginTop: "1em", marginBottom: "1em" }}
+      >
+        <Card array={data[index].vitals} />
+      </section>
+      <ClinicalCard patient={data[index]} />
+      <AdditionalInfo patient={data[index]} />
+    </section>;
+  };
 
   return (
     <>
-    <PDFGenerator>
-         <Header>
-         <main className="container">
-            {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      <PDFGenerator>
+        <Header>
+          <main className="container">
             <Speech></Speech>
-            {renderPatients}
-         </main>
-         </Header>
+            <div className="dropdown">
+              <button
+                className="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Select Patient
+              </button>
+              <div
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
+                {data.map((patient, index) => (
+                  <button
+                    className="dropdown-item"
+                    key={index}
+                    onClick={() => switchCard(index)}
+                  >
+                    {" "}
+                    {patient.patientName}{" "}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {renderPatient}
+          </main>
+        </Header>
       </PDFGenerator>
     </>
   );
