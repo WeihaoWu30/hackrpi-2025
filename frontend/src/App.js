@@ -4,14 +4,15 @@ import PatientCard from "./Components/Profile.js";
 import Speech from "./Components/Speech.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Components/components.css";
-import React from "react";
+import React, { Fragment } from "react";
+import { Header } from "./Components/Header.js";
 
 import "./App.css";
 import TableCard from "./Components/TableCard.js";
 import AdditionalInfo from "./AdditionalInfo";
 
 function App() {
-  const patients = [
+   const patients = [
     {
       name: "John Doe",
       id: "12345",
@@ -94,10 +95,16 @@ function App() {
   ));
 
   return (
-    <main className="container">
-      <Speech></Speech>
-      {renderPatients}
-    </main>
+   <>
+         <Header>
+            <main className="container">
+         <Speech></Speech>
+         {renderPatients}
+            </main>
+         </Header>
+
+   </>
+     
   );
 }
 

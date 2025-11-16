@@ -3,6 +3,7 @@ import { useReducer } from "react";
 import { useRef } from "react";
 import { useTranscript } from "./TranscriptContext";
 
+
 export default function Speech() {
   // const [transcript, setTranscript] = useState("");
   const { transcript, updateTranscript, clearTranscript } = useTranscript();
@@ -23,10 +24,17 @@ export default function Speech() {
       stream.current?.getTracks().forEach((track) => track.stop());
       audioContext.current?.close();
       processor.current?.disconnect();
-      await fetch(process.env.REACT_APP_BACKEND + "/scribe", {
+      const response = await fetch(process.env.REACT_APP_BACKEND + "/scribe", {
         method: "POST",
+        headers: {
+         "Content-Type": "application/json",
+        },
         body: JSON.stringify({ transcript }),
       });
+      const data = await response.json();
+      const msg = data.content;
+      clearTranscript();
+      updateTranscript(msg);
       // clearTranscript();
     } else {
       clearTranscript();
@@ -101,6 +109,7 @@ export default function Speech() {
         id="offcanvasRight"
         aria-labelledby="offcanvasRightLabel"
       >
+<<<<<<< HEAD
         <div className="offcanvas-header">
           <h5 id="offcanvasRightLabel">Chat History</h5>
           <button
@@ -113,5 +122,43 @@ export default function Speech() {
         <div className="offcanvas-body">...</div>
       </div>
     </Fragment>
+=======
+        {isRecording ? "Stop Recording" : "Start Recording"}
+        <i
+          className={`fa fa-microphone${isRecording ? "-slash" : ""}`}
+          aria-hidden="true"
+        ></i>
+      </button>
+      {/* Manual offcanvas with conditional rendering*/}
+      {/* {showOffcanvas && (
+        <div
+          className="offcanvas offcanvas-start show"
+          style={{ visibility: "visible" }}
+          tabIndex="-1"
+        >
+          <div className="offcanvas-header">
+            <h5>Recording</h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => setShowOffcanvas(false)}
+            ></button>
+          </div>
+          <div className="offcanvas-body">{transcript}</div>
+        </div>
+      )} */}
+
+      {/* Backdrop */}
+      {/* {showOffcanvas && (
+        <div
+          className="offcanvas-backdrop show"
+          onClick={() => setShowOffcanvas(false)}
+        ></div>
+      )} */}
+        {/* <div className="offcanvas-body">{transcript}</div> */}
+      {/* </div> */}
+      {/* <p>{transcript}</p> */}
+    </div>
+>>>>>>> origin/main
   );
 }
