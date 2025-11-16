@@ -8,9 +8,11 @@ export default function PDFGenerator({ children }) {
       const options = {
          filename: 'patient-info.pdf',
          html2canvas:  { scale: 1, logging: true, dpi: 300, letterRendering: true},
-         jsPDF: {unit: 'in', format: 'letter', orientation: 'landscape'},
-         margin: 0.5
+         jsPDF: {unit: 'in', format: 'letter', orientation: 'landscape'}
+         // margin: 0.5
       };
+
+      
 
       // Check if the ref is attached to an element before calling the library
       if (elementRef.current) { 
