@@ -1,32 +1,47 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import { Header } from "./Components/Header";
+
 
 function ChatRoom() {
   const [chatHistory, setChatHistory] = useState([]);
   const [message, setMessage] = useState("");
   const recipient = "Dr. Sean Adams";
   const sender = "Dr. Jeffrey Combs"
-  const ws = new WebSocket("ws://localhost:3000");
+  const ws = useRef(null);
 
-  useEffect(() => {
+useEffect(() =>{
    const fetch = async() => {
       const res = await fetch(process.env.REACT_APP_BACKEND + `/message?src=${"You"}&dst=${sender}`)
    };
-  }, []);
-   ws.onopen = () => {
+   fetch();
+}, [])
+
+  useEffect(() => {
+   ws = new WebSocket(process.env.REACT_APP_WEBSOCKET);
+
+   ws.current.onopen = () => {
       console.log("WebSocket connected");
       const newMessage = {
          type: "register",
          src: sender,
       };
-      ws.send(JSON.stringify(newMessage))
+      ws.current.send(JSON.stringify(newMessage))
+
    };
 
-   ws.onmessage = (msg) => {
-      const data = JSON.parse(msg);
+   ws.current.onmessage = (msg) => {
+      console.log(msg);
+      const data = JSON.parse(msg.data);
       setChatHistory(prev => [...prev, data]);
    };
+
+   return() =>{
+      ws.close();
+   };
+   
+  }, []);
+
 
 
   const handleSubmit = (e) => {
@@ -40,7 +55,7 @@ function ChatRoom() {
         type: "message",
         dst: recipient,
       };
-      ws.send(newMessage);
+      ws.current.send(JSON.stringify(newMessage));
       setChatHistory((prev) => [...prev, newMessage]);
       setMessage("");
     }
