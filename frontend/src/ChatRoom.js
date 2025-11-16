@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { Header } from "./Components/Header";
 
 function ChatRoom() {
   const [chatHistory, setChatHistory] = useState([]);
@@ -50,34 +51,37 @@ function ChatRoom() {
   };
 
   return (
-    <div>
-      <div className="people-online">
-        <h3>{recipient}</h3>
-      </div>
+   <Header>
+      <div>
+            <div className="people-online">
+            <h3>{recipient}</h3>
+            </div>
 
-      <div className="chat-messages">
-        {chatHistory.map((msg, index) => (
-          <div key={index} className="message">
-            <strong>{msg.src}</strong>
-            <p>{msg.message}</p>
-          </div>
-        ))}
-      </div>
+            <div className="chat-messages">
+            {chatHistory.map((msg, index) => (
+               <div key={index} className="message">
+                  <strong>{msg.src}</strong>
+                  <p>{msg.message}</p>
+               </div>
+            ))}
+            </div>
 
-      <form className="chatBar" onSubmit={handleSubmit}>
-        <label>
-          <input
-            type="text"
-            name="message"
-            value={message}
-            onChange={updateMessage}
-            placeholder="Enter message"
-            className="chatText"
-          />
-        </label>
-        <button type="submit">Send</button>
-      </form>
-    </div>
+            <form className="chatBar" onSubmit={handleSubmit}>
+            <label>
+               <input
+                  type="text"
+                  name="message"
+                  value={message}
+                  onChange={updateMessage}
+                  placeholder="Enter message"
+                  className="chatText"
+               />
+            </label>
+            <button type="submit">Send</button>
+            </form>
+         </div>
+   </Header>
+    
   );
 }
 
