@@ -50,7 +50,7 @@ code {
 
 /* Style button like navbar links */
 .btn-primary[data-bs-target="#offcanvasRight"] {
-  background-color: #3498db;
+  background-color: #e22020;
   color: #ecf0f1;
   border: none;
   padding: 12px 24px;
@@ -64,6 +64,6 @@ code {
 }
 
 .btn-primary[data-bs-target="#offcanvasRight"]:hover {
-  background-color: #e22020;
+  background-color: #ad1a1a;
   color: white;
 }
