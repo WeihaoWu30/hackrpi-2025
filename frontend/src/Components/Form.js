@@ -24,16 +24,31 @@ function Form({ children }) {
       lastPayment: "",
     },
     vitals: [
-      { type: "Temperature", value: "", icon: "fas fa-thermometer-half" },
-      { type: "Breath Rate", value: "", icon: "fas fa-lungs" },
-      { type: "Respiratory Rate", value: "", icon: "fas fa-wind" },
-      { type: "Blood Pressure", value: "", icon: "fas fa-heartbeat" },
+      {
+        type: "Temperature",
+        value: "",
+        icon: "fas fa-thermometer-half",
+        units: "F",
+      },
+      { type: "Heart Rate", value: "", icon: "fas fa-lungs", units: "bpm" },
+      {
+        type: "Breath Rate",
+        value: "",
+        icon: "fas fa-wind",
+        units: "breaths/m",
+      },
+      {
+        type: "Blood Pressure",
+        value: "",
+        icon: "fas fa-heartbeat",
+        units: "mmHg",
+      },
     ],
   });
 
   const [medications, setMedications] = useState([""]);
   const [allergies, setAllergies] = useState([""]);
-  const [labs, setLabs] = useState([[],[],[],[]]);
+  const [labs, setLabs] = useState([[], [], [], []]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -104,10 +119,25 @@ function Form({ children }) {
         relationship: { name: "", relationship: "", phone: "" },
         billing: { balance: "", lastPayment: "" },
         vitals: [
-          { type: "Temperature", value: "", icon: "fas fa-thermometer-half" },
-          { type: "Breath Rate", value: "", icon: "fas fa-lungs" },
-          { type: "Respiratory Rate", value: "", icon: "fas fa-wind" },
-          { type: "Blood Pressure", value: "", icon: "fas fa-heartbeat" },
+          {
+            type: "Temperature",
+            value: "",
+            icon: "fas fa-thermometer-half",
+            units: "F",
+          },
+          { type: "Heart Rate", value: "", icon: "fas fa-lungs", units: "bpm" },
+          {
+            type: "Breath Rate",
+            value: "",
+            icon: "fas fa-wind",
+            units: "breaths/m",
+          },
+          {
+            type: "Blood Pressure",
+            value: "",
+            icon: "fas fa-heartbeat",
+            units: "mmHg",
+          },
         ],
       });
       setMedications([""]);
@@ -139,13 +169,13 @@ function Form({ children }) {
 
   const placeholderText = ["Date", "Test", "Result", "Reference Range"];
   const submitLabs = (data) => {
-    data.forEach(element => {
+    data.forEach((element) => {
       labs.push({
-        date:"",
-        test:"",
-        result:"",
-        referenceRange:""
-      })
+        date: "",
+        test: "",
+        result: "",
+        referenceRange: "",
+      });
     });
   };
 
@@ -252,6 +282,7 @@ function Form({ children }) {
             value={vital.value}
             onChange={(e) => handleVitalChange(index, e.target.value)}
           />
+          {vital.units}
         </label>
       ))}
 

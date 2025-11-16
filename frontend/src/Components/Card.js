@@ -7,7 +7,7 @@ function Card({ array }) {
       <i className={vital.icon}></i>
       <div className="vital-info">
         <h3>{vital.type}</h3>
-        <p>{vital.value}</p>
+        <p>{vital.value} {" "} {vital.units}</p>
       </div>
     </div>
   ));
