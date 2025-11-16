@@ -16,20 +16,6 @@ export default function Speech() {
   const source = useRef(null);
   const processor = useRef(null);
 
-  const drawer = () => {
-    <Fragment>
-      <div
-        className="offcanvas offcanvas-start"
-        tabindex="-1"
-        id="offcanvasStart"
-        aria-labelledby="offcanvasStartLabel"
-      >
-        <div className="offcanvas-body">{transcript}</div>
-      </div>
-      <p>{transcript}</p>
-    </Fragment>;
-  };
-
   const startRecording = async (e) => {
     e.preventDefault();
     setShowOffcanvas(true);

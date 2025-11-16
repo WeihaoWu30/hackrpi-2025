@@ -6,83 +6,62 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Components/components.css";
 import React, { Fragment } from "react";
 import { Header } from "./Components/Header.js";
+import { useState, useEffect } from "react";
 
 import "./App.css";
 import TableCard from "./Components/TableCard.js";
 import AdditionalInfo from "./AdditionalInfo";
 
 function App() {
-   const patients = [
-    {
-      name: "John Doe",
-      id: "12345",
-      sex: "Male",
-      age: 45,
-      phone: "555-123-4567",
-      email: "johndoe@gmail.com",
-      address: "123 Main St, Springfield, IL",
-      photo: "https://example.com/photos/johndoe.jpg",
-      vitals: [
-        {
-          type: "blood pressure",
-          value: "120/80 mmHg",
-          icon: "fa-solid fa-stethoscope vital-icon bp",
-        },
-        {
-          type: "heart rate",
-          value: "72 bpm",
-          icon: "fa-solid fa-heart vital-icon hr",
-        },
-        {
-          type: "temperature",
-          value: "98.6 °F",
-          icon: "fa-solid fa-temperature-high vital-icon temp",
-        },
-        {
-          type: "respiratory rate",
-          value: "16 breaths/min",
-          icon: "fa-solid fa-lungs vital-icon resp",
-        },
-      ],
-      medication: [
-        { name: "Aspirin", dosage: "81 mg", frequency: "daily" },
-        { name: "Lisinopril", dosage: "10 mg", frequency: "twice daily" },
-      ],
-      allergies: ["Penicillin", "Peanuts"],
-      labs: [
-        {
-          test: "CBC",
-          date: "2023-01-15",
-          result: "Normal",
-          reference: "70–99 mg/dL",
-        },
-        {
-          test: "Lipid Panel",
-          date: "2023-02-20",
-          result: "Elevated LDL",
-          reference: "LDL 130 mg/dL",
-        },
-      ],
+  const [data, setData] = useState([]);
 
-      // 🔹 New secondary info
+  const extraInfo = [
+    {
       insurance: {
-        provider: "BlueCross BlueShield",
-        policyNumber: "123456789",
-        coverage: "Full",
+        provider: "N/A",
+        policyNumber: "N/A",
+        coverage: "N/A",
       },
+    },
+    {
       emergencyContact: {
-        name: "Jane Doe",
-        relationship: "Spouse",
-        phone: "555-987-6543",
+        name: "N/A",
+        relationship: "N/A",
+        phone: "N/A",
       },
+    },
+    {
       billing: {
-        balance: "$250",
-        lastPayment: "2025-09-01",
-      }
+        balance: "N/A",
+        pastPayment: "N/A",
+      },
     },
   ];
 
-  const renderPatients = patients.map((patient, index) => (
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          process.env.REACT_APP_BACKEND + "/patient"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        const patientsWithProvider = result.patients.map((p) => ({
+          ...p,
+          ...Object.assign({}, ...extraInfo),
+        }));
+        setData(patientsWithProvider);
+      } catch (error) {
+        console.log("Error fetching data");
+      }
+    };
+
+    fetchData();
+  }, []); // The empty dependency array ensures this runs only once on mount
+
+  const renderPatients = data?.map((patient, index) => (
     <React.Fragment key={index}>
       <PatientCard patient={patient} />
       <section className="vitals-grid">
@@ -95,16 +74,15 @@ function App() {
   ));
 
   return (
-   <>
-         <Header>
-            <main className="container">
-         <Speech></Speech>
-         {renderPatients}
-            </main>
-         </Header>
-
-   </>
-     
+    <>
+      <Header>
+        <main className="container">
+          {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+          <Speech></Speech>
+          {renderPatients}
+        </main>
+      </Header>
+    </>
   );
 }
 

@@ -12,7 +12,7 @@ function ClinicalCard(props) {
           <i className="fa-solid fa-pills"></i> Medications
         </h2>
         <ul>
-          {patient.medication.map((m, index) => (
+          {patient.medications.map((m, index) => (
             <li key={index}>
               {m.name} {m.dosage} {m.frequency}
             </li>
