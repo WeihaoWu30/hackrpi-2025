@@ -8,11 +8,11 @@ export default function Speech(){
    const { transcript, updateTranscript, clearTranscript } = useTranscript();
    const [isRecording, setRecording] = useState(false);
 
-   const ws = useRef(null);
-   const stream = useRef(null);
-   const audioContext = useRef(null);
-   const source = useRef(null);
-   const processor = useRef(null);
+  const ws = useRef(null);
+  const stream = useRef(null);
+  const audioContext = useRef(null);
+  const source = useRef(null);
+  const processor = useRef(null);
 
    const startRecording = async(e) =>{
       e.preventDefault();
