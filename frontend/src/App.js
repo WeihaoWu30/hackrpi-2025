@@ -77,12 +77,12 @@ function App() {
       billing: {
         balance: "$250",
         lastPayment: "2025-09-01",
-      },
+      }
     },
   ];
 
   const renderPatients = patients.map((patient, index) => (
-    <React.Fragment id={index} key={index}>
+    <React.Fragment key={index}>
       <PatientCard patient={patient} />
       <section className="vitals-grid">
         <Card array={patient.vitals} />
@@ -95,8 +95,8 @@ function App() {
 
   return (
     <main className="container">
-      {renderPatients}
       <Speech></Speech>
+      {renderPatients}
     </main>
   );
 }

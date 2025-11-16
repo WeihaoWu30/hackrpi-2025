@@ -12,7 +12,8 @@ function generatePDF({children}){
    html2pdf().set(options).from(element).save();
    return(
       <div>
-         
+         <div ref={element}>{children}</div>
+         <button onClick={(generatePDF)}>Export Data</button>
       </div>
    )
 }

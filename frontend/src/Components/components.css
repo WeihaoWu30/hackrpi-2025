@@ -369,28 +369,35 @@ form button[type="button"]:active {
   transform: translateY(1px);
 }
 
+/* Compact Info Card */
 .info-card {
   background: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 6px;          /* slightly smaller radius */
+  padding: 1rem;               /* reduced padding */
+  margin-bottom: 1rem;         /* less vertical spacing */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08); /* lighter shadow */
 }
 
 .info-card h2 {
-  margin-top: 0;
+  margin: 0 0 0.5rem 0;        /* tighter spacing below heading */
   color: #2d89ef;
+  font-size: 1rem;             /* smaller font size */
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;                 /* reduced gap between icon and text */
+}
+
+.info-content {
+  margin-top: 0.5rem;          /* less space above content */
 }
 
 .info-content ul {
   list-style: none;
   padding: 0;
+  margin: 0;                   /* remove default list margin */
 }
 
 .info-content li {
-  margin: 0.5rem 0;
+  margin: 0.3rem 0;            /* tighter spacing between items */
+  font-size: 0.9rem;           /* slightly smaller text */
 }
-
