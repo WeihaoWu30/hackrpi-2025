@@ -49,7 +49,7 @@ export const Header = ({children}) =>{
   }, []);
 
    return (<><header className="header">
-   <h1>EHR System</h1>
+   <h1>BEHR System</h1>
    <nav className="doctor-info">
    <p> Dr. Jeffrey Combs | General Medicine</p>
    <Link to="/form">Create Form</Link>{" "}
