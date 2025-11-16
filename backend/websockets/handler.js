@@ -15,6 +15,9 @@ export const handleSockets = (wss) => {
             console.log("Error Parsing Data: ", e.message);
             return;
          }
+         for(const [key, value] of clientMapper) {
+            console.log(key + " is Talking");
+         }
 
          if(data.type === "register") {
             ws.physicianName = data.src;
@@ -40,6 +43,7 @@ export const handleSockets = (wss) => {
                   message: data.message,
                   timestamp: data.timestamp,
                };
+               console.log(payload);
                const sortedField = [recipient.physicianName, ws.physicianName].sort();
                const collectionRef = collection(db, "messages");
                const docRef = await addDoc(collectionRef, {
@@ -64,5 +68,7 @@ export const handleSockets = (wss) => {
             return;
          }
       });
+
+      ws.send("Welcome To WebSocket!");
    });
 }
