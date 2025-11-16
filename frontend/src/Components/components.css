@@ -293,7 +293,7 @@ form button[type="submit"]:active {
   min-height: 80vh;
   padding: 20px;
 }
-.record-container{
+.record-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -315,6 +315,13 @@ form button[type="submit"]:active {
   box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
 }
 
+.transcript {
+  border: #1f6391 2px solid;
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+}
+
 .record i {
   font-size: 18px;
 }
@@ -327,4 +334,77 @@ form button[type="submit"]:active {
 
 .record:active {
   transform: scale(0.98);
+}
+
+/* Extra spacing for Allergies and Labs sections */
+form .allergies-section,
+form .labs-section {
+  margin-bottom: 25px;
+}
+
+/* Space above Allergies section */
+form .allergies-section {
+  margin-top: 25px;
+}
+
+/* Space between Add Labs button and Submit */
+form .labs-section button[type="button"] {
+  margin-bottom: 20px;
+}
+
+/* Make Add buttons match Submit button style */
+form button[type="button"] {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+form button[type="button"]:hover {
+  background-color: #2980b9;
+}
+
+form button[type="button"]:active {
+  background-color: #1f6391;
+  transform: translateY(1px);
+}
+
+/* Compact Info Card */
+.info-card {
+  background: white;
+  border-radius: 6px; /* slightly smaller radius */
+  padding: 1rem; /* reduced padding */
+  margin-bottom: 1rem; /* less vertical spacing */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* lighter shadow */
+}
+
+.info-card h2 {
+  margin: 0 0 0.5rem 0; /* tighter spacing below heading */
+  color: #2d89ef;
+  font-size: 1rem; /* smaller font size */
+  display: flex;
+  align-items: center;
+  gap: 0.4rem; /* reduced gap between icon and text */
+}
+
+.info-content {
+  margin-top: 0.5rem; /* less space above content */
+}
+
+.info-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; /* remove default list margin */
+}
+
+.info-content li {
+  margin: 0.3rem 0; /* tighter spacing between items */
+  font-size: 0.9rem; /* slightly smaller text */
 }

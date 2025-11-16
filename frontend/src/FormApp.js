@@ -5,7 +5,7 @@ import "./App.css";
 
 function FormApp() {
   return (
-    <Fragment>
+    <div style={{display:"flex", justifyContent:"center",alignItems:"center"}}>
       <div className="form-container">
         <Form>
           <h1>Create New Patient</h1>
@@ -16,7 +16,7 @@ function FormApp() {
         <FormTwo></FormTwo>
         <div></div>
       </div>
-    </Fragment>
+    </div>
   );
 }
 
