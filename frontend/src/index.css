@@ -50,11 +50,13 @@ code {
 
 /* Style button like navbar links */
 .btn-primary[data-bs-target="#offcanvasRight"] {
+  display: flex;
+  margin-left: auto;
+  margin-top: 50%;
   background-color: #e22020;
   color: #ecf0f1;
   border: none;
   padding: 12px 24px;
-  margin-left: 10px;
   border-radius: 5px;
   transition: all 0.3s ease;
   font-size: 16px;
