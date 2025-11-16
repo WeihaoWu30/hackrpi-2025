@@ -10,6 +10,10 @@ function Form({ children }) {
     address: " ",
   });
 
+  const [medications, setMedications] = useState([""]);
+  const [allergies, setAllergies] = useState([""]);
+  const [labs, setLabs] = useState([""]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -18,11 +22,38 @@ function Form({ children }) {
     }));
   };
 
+  const handleOtherChange = (values, setter, index, value) => {
+    const updated = [...values];
+    updated[index] = value;
+    setter(updated);
+  };
+
+  const addField = (setter) => setter((prev) => [...prev, ""]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Submitted data:", formData);
+    console.log({ medications, allergies, labs });
+
     // Send formData to backend or process it
   };
+
+  const renderFields = (label, values, setter) => (
+    <div>
+      <label>{label}</label>
+      {values.map((val, i) => (
+        <input
+          key={i}
+          type="text"
+          value={val}
+          onChange={(e) => handleChange(values, setter, i, e.target.value)}
+        />
+      ))}
+      <button type="button" onClick={() => addField(setter)}>
+        + Add {label}
+      </button>
+    </div>
+  );
 
   return (
     <form onSubmit={handleSubmit}>
@@ -87,6 +118,17 @@ function Form({ children }) {
           onChange={handleChange}
         />
       </label>
+      <h1>Other Patient Information</h1>
+      <p>Record medications, allergies, and labs</p>
+
+      {renderFields("Medications", medications, setMedications)}
+
+      <div className="allergies-section">
+        {renderFields("Allergies", allergies, setAllergies)}
+      </div>
+
+      <div className="labs-section">{renderFields("Labs", labs, setLabs)}</div>
+
       <button type="submit">Submit</button>
     </form>
   );

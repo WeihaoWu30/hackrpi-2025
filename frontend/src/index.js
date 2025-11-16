@@ -16,7 +16,7 @@ root.render(
   <React.StrictMode>
     <TranscriptProvider>
       <BrowserRouter>
-        <header class="header">
+        <header className="header">
           <h1>EHR System</h1>
           <nav className="doctor-info">
             <p> Dr. Jeffrey Combs | General Medicine</p>
@@ -26,9 +26,20 @@ root.render(
             <button
               className="btn btn-primary"
               type="button"
+              data-bs-toggle="offcanvasChat"
+              data-bs-target="#offcanvasChat"
+              aria-controls="offcanvasStart"
+              id="transcript"
+            >
+              Transcript
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasRight"
               aria-controls="offcanvasRight"
+              id="notifs"
             >
               Alerts
             </button>
@@ -52,6 +63,24 @@ root.render(
               type="button"
               className="btn-close text-reset"
               data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div className="offcanvas-body">...</div>
+        </div>
+
+        <div
+          className="offcanvas offcanvas-start"
+          tabindex="-1"
+          id="transcript"
+          aria-labelledby="offcanvasStart"
+        >
+          <div className="offcanvas-header">
+            <h5 id="transcript">Offcanvas top</h5>
+            <button
+              type="button"
+              className="btn-close text-reset"
+              data-bs-dismiss="offcanvasChat"
               aria-label="Close"
             ></button>
           </div>

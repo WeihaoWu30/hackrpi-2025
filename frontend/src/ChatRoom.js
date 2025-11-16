@@ -4,8 +4,8 @@ import "./App.css";
 function ChatRoom() {
   const [chatHistory, setChatHistory] = useState([]);
   const [message, setMessage] = useState("");
-  const recipient = "Dr. Sean Adams";
-  const sender = "Dr. Jeffrey Combs"
+  const recipient = "Dr. Jeffrey Combs";
+  const sender = "Dr. Sean Adams"
   const ws = new WebSocket("ws://localhost:3000");
 
   useEffect(() => {

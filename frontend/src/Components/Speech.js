@@ -7,7 +7,6 @@ export default function Speech() {
   // const [transcript, setTranscript] = useState("");
   const { transcript, updateTranscript, clearTranscript } = useTranscript();
   const [isRecording, setRecording] = useState(false);
-  const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   const ws = useRef(null);
   const stream = useRef(null);
@@ -17,7 +16,6 @@ export default function Speech() {
 
   const startRecording = async (e) => {
     e.preventDefault();
-    setShowOffcanvas(true);
 
     if (isRecording) {
       setRecording(false);
@@ -86,48 +84,34 @@ export default function Speech() {
   };
 
   return (
-    <div className="record-container">
+    <Fragment>
+      <div className="record-container">
+        <button type="button" onClick={startRecording}>
+          {isRecording ? "Stop Recording" : "Start Recording"}
+          <i
+            className={`fa fa-microphone${isRecording ? "-slash" : ""}`}
+            aria-hidden="true"
+          ></i>
+        </button>
+      </div>
 
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={startRecording}
+      <div
+        className="offcanvas offcanvas-end"
+        tabIndex="-1"
+        id="offcanvasRight"
+        aria-labelledby="offcanvasRightLabel"
       >
-        {isRecording ? "Stop Recording" : "Start Recording"}
-        <i
-          className={`fa fa-microphone${isRecording ? "-slash" : ""}`}
-          aria-hidden="true"
-        ></i>
-      </button>
-      {/* Manual offcanvas with conditional rendering*/}
-      {showOffcanvas && (
-        <div
-          className="offcanvas offcanvas-start show"
-          style={{ visibility: "visible" }}
-          tabIndex="-1"
-        >
-          <div className="offcanvas-header">
-            <h5>Recording</h5>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={() => setShowOffcanvas(false)}
-            ></button>
-          </div>
-          <div className="offcanvas-body">{transcript}</div>
+        <div className="offcanvas-header">
+          <h5 id="offcanvasRightLabel">Chat History</h5>
+          <button
+            type="button"
+            className="btn-close text-reset"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
         </div>
-      )}
-
-      {/* Backdrop */}
-      {showOffcanvas && (
-        <div
-          className="offcanvas-backdrop show"
-          onClick={() => setShowOffcanvas(false)}
-        ></div>
-      )}
-        {/* <div className="offcanvas-body">{transcript}</div> */}
-      {/* </div> */}
-      {/* <p>{transcript}</p> */}
-    </div>
+        <div className="offcanvas-body">...</div>
+      </div>
+    </Fragment>
   );
 }
