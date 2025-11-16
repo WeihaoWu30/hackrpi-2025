@@ -9,6 +9,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "assemblyai": "^4.19.0",
+    "html2pdf.js": "^0.12.1",
     "node-record-lpcm16": "^1.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -17,8 +18,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "set GENERATE_SOURCEMAP=false && react-scripts start",
+    "build": "set GENERATE_SOURCEMAP=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
