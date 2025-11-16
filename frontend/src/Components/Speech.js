@@ -100,7 +100,6 @@ export default function Speech() {
 
   return (
     <div className="record-container">
-      {/* <p>{transcript}</p> */}
 
       <button
         className="btn btn-primary"
