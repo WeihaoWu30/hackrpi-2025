@@ -6,11 +6,14 @@ import FormApp from "./FormApp";
 import ChatRoom from "./ChatRoom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { TranscriptProvider } from "./Components/TranscriptContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+   
   <React.StrictMode>
-    <BrowserRouter>
+    <TranscriptProvider>
+   <BrowserRouter>
       <header class="header">
         <h1>EHR System</h1>
         <nav className="doctor-info">
@@ -27,6 +30,7 @@ root.render(
         <Route path="/chat" element={<ChatRoom />} />
       </Routes>
     </BrowserRouter>
+   </TranscriptProvider>
   </React.StrictMode>
 );
 

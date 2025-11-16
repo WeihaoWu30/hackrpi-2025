@@ -1,9 +1,11 @@
 import {useState} from 'react';
 import { useReducer } from 'react';
 import { useRef } from 'react';
+import { useTranscript } from './TranscriptContext';
 
 export default function Speech(){
-   const [transcript, setTranscript] = useState("");
+   // const [transcript, setTranscript] = useState("");
+   const { transcript, updateTranscript, clearTranscript } = useTranscript();
    const [isRecording, setRecording] = useState(false);
 
    const ws = useRef(null);
@@ -14,11 +16,7 @@ export default function Speech(){
 
    const startRecording = async(e) =>{
       e.preventDefault();
-      // const stream = await navigator.mediaDevices.getUserMedia({audio: true});
-      // const ws = new WebSocket("wss://streaming.assemblyai.com/v3/ws?sample_rate=16000&token=11d1916f92be445e9df2d2f26d2d11d5");
-      // const audioContext = new AudioContext({sampleRate: 16000});
-      // const source = audioContext.createMediaStreamSource(stream);
-      // const processor = audioContext.createScriptProcessor(4096, 1, 1);
+
       
       if(isRecording) {
          setRecording(false);
@@ -27,11 +25,11 @@ export default function Speech(){
          audioContext.current?.close();
          processor.current?.disconnect();
          await fetch(process.env.REACT_APP_BACKEND, {method: "POST", body: JSON.stringify({transcript})});
-         setTranscript("");
+         clearTranscript();
       } else {
          setRecording(true);
          stream.current = await navigator.mediaDevices.getUserMedia({audio: true});
-         ws.current = new WebSocket("wss://streaming.assemblyai.com/v3/ws?sample_rate=16000&token=11d1916f92be445e9df2d2f26d2d11d5");
+         ws.current = new WebSocket(`wss://streaming.assemblyai.com/v3/ws?sample_rate=16000&token=${process.env.REACT_APP_ASSEMBLY_API_KEY}`);
          audioContext.current = new AudioContext({sampleRate: 16000});
          source.current = audioContext.current.createMediaStreamSource(stream.current);
          processor.current = audioContext.current.createScriptProcessor(4096, 1, 1);
@@ -43,13 +41,10 @@ export default function Speech(){
                if (message.type == "Turn" && message.end_of_turn){
                   // console.log("isjfklasfjsaklfas");
                   // console.log(msg.data);
-                  setTranscript(prev => prev + message.transcript + ". ");
+                  // setTranscript(prev => prev + message.transcript + ". ");
+                  updateTranscript(message.transcript + ". ");
                   // console.log(message.transcript);
                }
-               else{
-                  console.log("fuck this");
-               }
-   
             }catch(err){
                console.log("Error", err);
             }
@@ -89,7 +84,7 @@ export default function Speech(){
           <i className="fa fa-microphone" aria-hidden="true"></i>
         )}
       </button>
-      <p>{transcript}</p>
+      {/* <p>{transcript}</p> */}
     </div>
   );
 }
