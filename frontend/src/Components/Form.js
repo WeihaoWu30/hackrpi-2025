@@ -80,7 +80,6 @@ function Form({ children }) {
       ...formData,
       medications,
       allergies,
-      labs,
     };
     event.preventDefault();
     try {
@@ -113,7 +112,6 @@ function Form({ children }) {
       });
       setMedications([""]);
       setAllergies([""]);
-      setLabs([[], [], [], []]);
     } catch (error) {
       console.log("Error posting data");
     }
