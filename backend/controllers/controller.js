@@ -182,8 +182,8 @@ export const sendAlert = (req, res) => {
    const intervalID = setInterval(() => {
       const randomNumber = Math.floor(Math.random() * (999 - 100 + 1) + 100);
       console.log(randomNumber);
-      res.write(`Emergency In Room ${randomNumber}\n`);
-   }, 45000);
+      res.write(`data: Emergency In Room ${randomNumber}\n\n`);
+   }, 10000);
 
    req.on("close", (req, res) => {
       clearInterval(intervalID);
