@@ -17,7 +17,5 @@ router.get("/message", fetchMessages);
 router.post("/scribe", messageAI);
 // SSE
 router.get("/events", sendAlert);
-// if time permits, ai automatic fillout form
-// router.post("/fill", () => {});
 
 export default router;
