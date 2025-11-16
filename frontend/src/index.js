@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <header class="header">
+      <header className="header">
         <h1>EHR System</h1>
         <nav className="doctor-info">
           <p> Dr. Jeffrey Combs | General Medicine</p>
@@ -33,7 +33,7 @@ root.render(
       </button>
       <div
         className="offcanvas offcanvas-end"
-        tabindex="-1"
+        tabIndex="-1"
         id="offcanvasRight"
         aria-labelledby="offcanvasRightLabel"
       >
