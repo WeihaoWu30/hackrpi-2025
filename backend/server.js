@@ -4,6 +4,7 @@ import http from "http";
 import morgan from "morgan";
 import { WebSocketServer } from "ws";
 import { handleSockets } from "./websockets/handler.js"
+import cors from "cors";
 
 const app = express();
 const server = http.createServer(app); 
@@ -12,6 +13,7 @@ const port = 3000;
 
 // express
 app.use(express.json());
+app.use(cors());
 app.use(morgan("dev"));
 app.use("/api", router);
 
