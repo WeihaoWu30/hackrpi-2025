@@ -50,25 +50,33 @@
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
   background-color: white;
   border-top: 2px solid #e0e0e0;
   padding: 15px 20px;
   display: flex;
+  align-items: center;
   gap: 10px;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-.chatBar input {
+.chatBar label {
+  flex: 1;
+  margin: 0;
+}
+
+.chatText {
   width: 100%;
+  padding: 12px 16px;
   border: 2px solid #e0e0e0;
-  border-radius: 25px;
-  font-size: 15px;
+  border-radius: 8px;
+  font-size: 16px;
   outline: none;
-  transition: border-color 0.3s;
+  box-sizing: border-box;
+  height: 45px;
 }
 
-.chatBar input:focus {
+.chatText:focus {
   border-color: #3498db;
 }
 
@@ -77,12 +85,66 @@
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 25px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  flex-shrink: 0;
+  height: 45px;
+  min-width: 80px;
+  max-width: 100px;
 }
 
 .chatBar button:hover {
   background-color: #2980b9;
+}
+
+/* Chat messages container */
+.chat-messages {
+  padding: 20px;
+  margin-bottom: 100px; /* Space for fixed chatBar */
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+
+.message {
+  background-color: #f1f3f4;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  max-width: 70%;
+}
+
+.message strong {
+  color: #2c3e50;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.message p {
+  margin: 0;
+  color: #34495e;
+}
+
+/* People online section */
+.people-online {
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.people-online h3 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.person {
+  display: inline-block;
+  background-color: #3498db;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 15px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
 }
