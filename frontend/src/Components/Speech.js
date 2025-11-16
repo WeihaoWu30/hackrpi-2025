@@ -30,6 +30,7 @@ export default function Speech(){
          setRecording(true);
          stream.current = await navigator.mediaDevices.getUserMedia({audio: true});
          ws.current = new WebSocket(`wss://streaming.assemblyai.com/v3/ws?sample_rate=16000&token=${process.env.REACT_APP_ASSEMBLY_API_KEY}`);
+         console.log(process.env.REACT_APP_ASSEMBLY_API_KEY);
          audioContext.current = new AudioContext({sampleRate: 16000});
          source.current = audioContext.current.createMediaStreamSource(stream.current);
          processor.current = audioContext.current.createScriptProcessor(4096, 1, 1);
@@ -82,9 +83,9 @@ export default function Speech(){
           <i className="fa fa-microphone" aria-hidden="true"></i>
         )}
       </button>
-      {/* <p>{transcript}</p> */}
+      <p>{transcript}</p>
 
-      <button
+      {/* <button
         className="btn btn-primary"
         type="button"
         data-bs-toggle="offcanvas"
@@ -110,8 +111,8 @@ export default function Speech(){
           ></button>
         </div>
         <div className="offcanvas-body">{transcript}</div>
-      </div>
-      <p>{transcript}</p>
+      </div> */}
+      {/* <p>{transcript}</p> */}
     </div>
   );
 }

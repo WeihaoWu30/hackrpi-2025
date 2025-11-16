@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import FormApp from "./FormApp";
 import ChatRoom from "./ChatRoom";
+import Speech from "./Components/Speech";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { TranscriptProvider } from "./Components/TranscriptContext";
@@ -58,6 +59,7 @@ root.render(
         <Route path="/chat" element={<ChatRoom />} />
       </Routes>
     </BrowserRouter>
+    <Speech></Speech>
    </TranscriptProvider>
   </React.StrictMode>
 );
