@@ -1,19 +1,30 @@
 import React, {useRef} from "react";
 import html2pdf from "html2pdf.js"
 
-function generatePDF({children}){
-   const element = useRef(null);
-   const options = {
-      filename: 'patient-info.pdf',
-      html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true },
-      jsPDF: {unit: 'in', format: 'letter', orientation: 'landscape'}
-   }
+export default function PDFGenerator({ children }) { 
+   const elementRef = useRef(null); 
 
-   html2pdf().set(options).from(element).save();
-   return(
+   const handleExport = () => {
+      const options = {
+         filename: 'patient-info.pdf',
+         html2canvas:  { scale: 1, logging: true, dpi: 300, letterRendering: true },
+         jsPDF: {unit: 'in', format: 'letter', orientation: 'landscape'}
+      };
+
+      // Check if the ref is attached to an element before calling the library
+      if (elementRef.current) { 
+         html2pdf().set(options).from(elementRef.current).save();
+      } else {
+         console.error("Content reference not found.");
+      }
+   };
+
+   return (
       <div>
-         <div ref={element}>{children}</div>
-         <button onClick={(generatePDF)}>Export Data</button>
+         <div ref={elementRef}>{children}</div> 
+         
+         <button onClick={handleExport}>Export Data</button> 
       </div>
-   )
+   );
 }
+

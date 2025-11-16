@@ -6,7 +6,7 @@ const clientMapper = new Map();
 export const handleSockets = (wss) => {
    wss.on("connection", (ws) => {
       console.log("Connection Established.");
-
+ 
       ws.on("message", async (msg) => {
          let data;
          try {
@@ -14,6 +14,9 @@ export const handleSockets = (wss) => {
          } catch(e) {
             console.log("Error Parsing Data: ", e.message);
             return;
+         }
+         for(const [key, value] of clientMapper) {
+            console.log(key + " is Talking");
          }
 
          if(data.type === "register") {
@@ -28,6 +31,7 @@ export const handleSockets = (wss) => {
                   type: "ERROR",
                   content: data.src + " is not online",
                }));
+               return;
             }
 
             const recipient = clientMapper.get(data.dst);
@@ -40,6 +44,7 @@ export const handleSockets = (wss) => {
                   message: data.message,
                   timestamp: data.timestamp,
                };
+               console.log(payload);
                const sortedField = [recipient.physicianName, ws.physicianName].sort();
                const collectionRef = collection(db, "messages");
                const docRef = await addDoc(collectionRef, {
@@ -47,12 +52,14 @@ export const handleSockets = (wss) => {
                   chatID: sortedField, 
                });
                recipient.send(JSON.stringify(payload));
+               return;
             } else {
                console.log("Recipient not online");
                ws.send(JSON.stringify({
                   type: "ERROR",
                   content: "Recipient " + data.dst + " is not online",
                }));
+               return;
             }
          };
       });
@@ -61,8 +68,8 @@ export const handleSockets = (wss) => {
          if(ws.physicianName) {
             clientMapper.delete(ws.physicianName);
             console.log("Connected Ended with", ws.physicianName);
-            return;
          }
+         return;
       });
    });
 }

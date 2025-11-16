@@ -5,8 +5,6 @@ import { GoogleGenAI } from "@google/genai"
 
 const ai = new GoogleGenAI({});
 const model = "gemini-2.0-flash";
-// const ollamaAPI = "http://localhost:11434/api";
-// const ollamaModel = "gpt-oss:120b-cloud";
 
 // follow this format for the rest of the controllers
 export const fetchAllPatientData = async(_, res) => {
@@ -138,60 +136,23 @@ export const messageAI = async (req, res) => {
       console.log(error.message);
       res.status(400).json(error);
    }
-      /*
-      const chunks = data.transcript.split(` `);
-      const formatted = chunks.map((chunk) => {
-         return { role: "user", content: chunk };
-      });
-      const response = await fetch(ollamaAPI + "/chat", {
-         method: "POST",
-         body: JSON.stringify({
-            model: ollamaModel,
-            messages: [
-               SYSTEM_MESSAGE,
-               ...formatted,
-            ],
-            stream: false,
-         }),
-      });
-      if(response.status === 200) {
-         const collectionRef = collection(db, "logs");
-         const data = await response.json();
-         await addDoc(collectionRef, {
-            transcript: chunks,
-            modelResponse: data.message.content,
-            timestamp: new Date().toLocaleString(),
-            model: ollamaModel,
-         });
-         res.status(200).json({ content: data.message.content });
-      } else {
-         res.status(500).json(response);
-      }
-   } catch(e) {
-      console.log(e.message);
-      res.status(400).json(e);
-   }*/
 }
 
 export const sendAlert = (req, res) => {
-   res.setHeaders("Content-Type", "text/event-stream");
-   res.setHeaders("Cache-Control", "no-cache");
-   res.setHeaders("Connection", "keep-alive");
+   res.setHeader("Content-Type", "text/event-stream");
+   res.setHeader("Cache-Control", "no-cache");
+   res.setHeader("Connection", "keep-alive");
    res.flushHeaders();
 
    const intervalID = setInterval(() => {
-      const randomNumber = Math.floor(Math.random() * (999 - 100 + 1) + 100);
-      console.log(randomNumber);
-      res.write(`Emergency In Room ${randomNumber}\n`);
-   }, 30000);
+      const appointment = new Date().toLocaleTimeString();
+      console.log(appointment);
+      res.write(`data: A new appointment has been scheduled on ${appointment}\n\n`);
+   }, 45000);
 
    req.on("close", (req, res) => {
       clearInterval(intervalID);
-      res.end();
       console.log("Client Disconnected From Server Sent Events");
    });
 }
-/* export const autoFill = (req, res) => {
-   
-} */
 
