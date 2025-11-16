@@ -140,8 +140,8 @@ export default function Speech() {
         ></div>
       )}
         <div className="offcanvas-body">{transcript}</div>
-      </div> */}
-      {/* <p>{transcript}</p> */}
+      {/* </div> */}
+      <p>{transcript}</p>
     </div>
   );
 }
