@@ -3,6 +3,7 @@ import { useReducer } from "react";
 import { useRef } from "react";
 import { useTranscript } from "./TranscriptContext";
 
+
 export default function Speech() {
   // const [transcript, setTranscript] = useState("");
   const { transcript, updateTranscript, clearTranscript } = useTranscript();
@@ -39,10 +40,17 @@ export default function Speech() {
       stream.current?.getTracks().forEach((track) => track.stop());
       audioContext.current?.close();
       processor.current?.disconnect();
-      await fetch(process.env.REACT_APP_BACKEND + "/scribe", {
+      const response = await fetch(process.env.REACT_APP_BACKEND + "/scribe", {
         method: "POST",
+        headers: {
+         "Content-Type": "application/json",
+        },
         body: JSON.stringify({ transcript }),
       });
+      const data = await response.json();
+      const msg = data.content;
+      clearTranscript();
+      updateTranscript(msg);
       // clearTranscript();
     } else {
       clearTranscript();
@@ -114,7 +122,7 @@ export default function Speech() {
         ></i>
       </button>
       {/* Manual offcanvas with conditional rendering*/}
-      {showOffcanvas && (
+      {/* {showOffcanvas && (
         <div
           className="offcanvas offcanvas-start show"
           style={{ visibility: "visible" }}
@@ -130,15 +138,15 @@ export default function Speech() {
           </div>
           <div className="offcanvas-body">{transcript}</div>
         </div>
-      )}
+      )} */}
 
       {/* Backdrop */}
-      {showOffcanvas && (
+      {/* {showOffcanvas && (
         <div
           className="offcanvas-backdrop show"
           onClick={() => setShowOffcanvas(false)}
         ></div>
-      )}
+      )} */}
         {/* <div className="offcanvas-body">{transcript}</div> */}
       {/* </div> */}
       {/* <p>{transcript}</p> */}

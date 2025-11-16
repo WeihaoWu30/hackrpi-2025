@@ -64,6 +64,25 @@ code {
   transition: background-color 0.3s ease;
 }
 
+.btn-primary[data-bs-target="#offcanvasLeft"] {
+   display: flex;
+   margin-left: 1em;
+   background-color: #3498db;
+   color: #ecf0f1;
+   border: none;
+   padding: 8px 16px;
+   border-radius: 5px;
+   transition: all 0.3s ease;
+   font-size: 16px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+ }
+
+ .btn-primary[data-bs-target="#offcanvasLeft"]:hover {
+   background-color: #2980b9;
+ }
+
 .btn-primary[data-bs-target="#offcanvasRight"]:hover {
   background-color: #ad1a1a;
   color: white;
@@ -88,4 +107,9 @@ code {
   background-color: #2980b9;
   transform: translateY(-50%) scale(1.05);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.header{
+   position: sticky;
+   top: 0;
 }
