@@ -187,7 +187,6 @@ export const sendAlert = (req, res) => {
 
    req.on("close", (req, res) => {
       clearInterval(intervalID);
-      res.end();
       console.log("Client Disconnected From Server Sent Events");
    });
 }
