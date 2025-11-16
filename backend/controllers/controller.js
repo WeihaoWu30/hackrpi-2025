@@ -15,9 +15,7 @@ export const fetchAllPatientData = async(_, res) => {
 
       const payload = { patients: [] };
       const querySnapshots = await getDocs(collectionRef);
-      querySnapshots.forEach((doc) => {
-         payload.push_back(doc.data());
-      });
+      querySnapshots.forEach((doc) => payload.push_back(doc.data()));
       
       res.status(200).json(payload);
    } catch(e) {
@@ -78,22 +76,44 @@ export const insertPatient = async (req, res) => {
    }
 }
 
+export const fetchMessages = async (req, res) => {
+   try {
+      const sender = req.src;
+      const recipient = req.dst;
+      if(!sender || !recipient) {
+         return res.status(400).json({ error: "" });
+      }
+
+      const sortedField = [sender, recipient].sort();
+      const q = query(collection(db, "messages"), where("chatID", "in", sortedField));
+
+      const querySnapshots = await getDocs(q);
+      const payload = { messages: [] };
+      querySnapshots.forEach((doc) => payload.messages.push_back(doc.data()));
+      res.status(200).json(payload);
+   } catch(error) {
+      console.log(error);
+      res.status(500).json({ error });
+   }
+}
+
 export const messageAI = async (req, res) => {
    try {
       const data = req.body;
       if(!data) {
          return res.status(400).json({ error: "Missing Transcript" });
       }
+      const chunks = data.split("", 500);
+      const formatted = chunks.map((chunk) => {
+         return { role: "user", content: chunk };
+      });
       const response = await fetch(ollamaAPI + "/chat", {
          method: "POST",
          body: JSON.stringifiy({
             model: ollamaModel,
             messages: [
                SYSTEM_MESSAGE,
-               {
-                  role: "user",
-                  content: data.trancsript,
-               },
+               ...formatted,
             ],
             stream: false,
          }),
@@ -109,6 +129,24 @@ export const messageAI = async (req, res) => {
    }
 }
 
+export const sendAlert = (req, res) => {
+   res.setHeaders("Content-Type", "text/event-stream");
+   res.setHeaders("Cache-Control", "no-cache");
+   res.setHeaders("Connection", "keep-alive");
+   res.flushHeaders();
+
+   const intervalID = setInterval(() => {
+      const randomNumber = Math.floor(Math.random() * (999 - 100 + 1) + 100);
+      console.log(randomNumber);
+      res.write(`Emergency In Room ${randomNumber}\n`);
+   }, 30000);
+
+   req.on("close", (req, res) => {
+      clearInterval(intervalID);
+      res.end();
+      console.log("Client Disconnected From Server Sent Events");
+   });
+}
 /* export const autoFill = (req, res) => {
    
 } */
