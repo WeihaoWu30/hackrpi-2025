@@ -14,7 +14,7 @@ function ClinicalCard(props) {
         <ul>
           {patient.medications.map((m, index) => (
             <li key={index}>
-              {m.name} {m.dosage} {m.frequency}
+              {m}
             </li>
           ))}
         </ul>

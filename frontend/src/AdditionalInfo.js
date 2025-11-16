@@ -15,9 +15,9 @@ function AdditionalInfo({ patient }) {
 
       <InfoCard icon="user-shield" title="Emergency Contact">
         <ul>
-          <li>Name: {patient.emergencyContact.name}</li>
-          <li>Relationship: {patient.emergencyContact.relationship}</li>
-          <li>Phone: {patient.emergencyContact.phone}</li>
+          <li>Name: {patient.relationship.name}</li>
+          <li>Relationship: {patient.relationship.relationship}</li>
+          <li>Phone: {patient.relationship.phone}</li>
         </ul>
       </InfoCard>
 

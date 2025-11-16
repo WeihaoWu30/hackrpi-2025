@@ -8,7 +8,7 @@ function Form({ children }) {
     phone: "",
     email: "",
     address: "",
-    sex:"",
+    sex: "",
     insurance: {
       provider: "",
       policyNumber: "",
@@ -33,7 +33,7 @@ function Form({ children }) {
 
   const [medications, setMedications] = useState([""]);
   const [allergies, setAllergies] = useState([""]);
-  const [labs, setLabs] = useState([""]);
+  const [labs, setLabs] = useState([[],[],[],[]]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -71,7 +71,9 @@ function Form({ children }) {
     setter(updated);
   };
 
-  const addField = (setter) => setter((prev) => [...prev, ""]);
+  const addField = (setter, count = 1) => {
+    setter((prev) => [...prev, ...Array(count).fill("")]);
+  };
 
   const handleSubmit = async (event) => {
     const fullData = {
@@ -97,29 +99,21 @@ function Form({ children }) {
         age: "",
         phone: "",
         email: "",
-        address: " ",
-        insurance: {
-          provider: "",
-          policyNumber: "",
-          coverage: "",
-        },
-        relationship: {
-          name: "",
-          relationship: "",
-          phone: "",
-        },
-        billing: {
-          balance: "",
-          lastPayment: "",
-        },
-        temp: "",
-        breathrate: "",
-        resprate: "",
-        pressure: "",
+        address: "",
+        sex: "",
+        insurance: { provider: "", policyNumber: "", coverage: "" },
+        relationship: { name: "", relationship: "", phone: "" },
+        billing: { balance: "", lastPayment: "" },
+        vitals: [
+          { type: "Temperature", value: "", icon: "fas fa-thermometer-half" },
+          { type: "Breath Rate", value: "", icon: "fas fa-lungs" },
+          { type: "Respiratory Rate", value: "", icon: "fas fa-wind" },
+          { type: "Blood Pressure", value: "", icon: "fas fa-heartbeat" },
+        ],
       });
       setMedications([""]);
       setAllergies([""]);
-      setLabs([""]);
+      setLabs([[], [], [], []]);
     } catch (error) {
       console.log("Error posting data");
     }
@@ -141,6 +135,36 @@ function Form({ children }) {
       ))}
       <button type="button" onClick={() => addField(setter)}>
         + Add {label}
+      </button>
+    </div>
+  );
+
+  const placeholderText = ["Date", "Test", "Result", "Reference Range"];
+  const submitLabs = (data) => {
+    data.forEach(element => {
+      labs.push({
+        date:"",
+        test:"",
+        result:"",
+        referenceRange:""
+      })
+    });
+  };
+
+  const renderLab = (label, values, setter) => (
+    <div>
+      <label>{label}</label>
+      {values.map((val, i) => (
+        <input
+          key={i}
+          type="text"
+          value={val}
+          onChange={(e) => handleMoreChange(values, setter, i, e.target.value)}
+          placeholder={placeholderText[i % 4]}
+        />
+      ))}
+      <button type="button" onClick={() => submitLabs(values)}>
+        + Submit {label}
       </button>
     </div>
   );
@@ -242,7 +266,7 @@ function Form({ children }) {
         {renderFields("Allergies", allergies, setAllergies)}
       </div>
 
-      <div className="labs-section">{renderFields("Labs", labs, setLabs)}</div>
+      <div className="labs-section">{renderLab("Labs", labs, setLabs)}</div>
 
       <h1>Miscellaneous Patient Information</h1>
       <p>record insurance, emergency info, and billing information</p>

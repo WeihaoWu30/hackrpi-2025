@@ -15,29 +15,6 @@ import AdditionalInfo from "./AdditionalInfo";
 function App() {
   const [data, setData] = useState([]);
 
-  const extraInfo = [
-    {
-      insurance: {
-        provider: "N/A",
-        policyNumber: "N/A",
-        coverage: "N/A",
-      },
-    },
-    {
-      emergencyContact: {
-        name: "N/A",
-        relationship: "N/A",
-        phone: "N/A",
-      },
-    },
-    {
-      billing: {
-        balance: "N/A",
-        pastPayment: "N/A",
-      },
-    },
-  ];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,11 +25,8 @@ function App() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();
-        const patientsWithProvider = result.patients.map((p) => ({
-          ...p,
-          ...Object.assign({}, ...extraInfo),
-        }));
-        setData(patientsWithProvider);
+        setData(result.patients);
+        console.log(result.patients);
       } catch (error) {
         console.log("Error fetching data");
       }
@@ -62,15 +36,14 @@ function App() {
   }, []); // The empty dependency array ensures this runs only once on mount
 
   const renderPatients = data?.map((patient, index) => (
-    <React.Fragment key={index}>
+    <section key={index} style={{border:"#4AC7F4 2px solid"}}>
       <PatientCard patient={patient} />
-      <section className="vitals-grid">
+      <section className="vitals-grid" style={{marginTop:"1em",marginBottom:"1em"}}>
         <Card array={patient.vitals} />
       </section>
       <ClinicalCard patient={patient} />
-      <TableCard patient={patient.labs} />
       <AdditionalInfo patient={patient} />
-    </React.Fragment>
+    </section>
   ));
 
   return (
