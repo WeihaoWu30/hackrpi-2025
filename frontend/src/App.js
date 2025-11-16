@@ -8,6 +8,7 @@ import React from "react";
 
 import "./App.css";
 import TableCard from "./Components/TableCard.js";
+import AdditionalInfo from "./AdditionalInfo";
 
 function App() {
   const patients = [
@@ -61,17 +62,34 @@ function App() {
           reference: "LDL 130 mg/dL",
         },
       ],
+
+      // 🔹 New secondary info
+      insurance: {
+        provider: "BlueCross BlueShield",
+        policyNumber: "123456789",
+        coverage: "Full",
+      },
+      emergencyContact: {
+        name: "Jane Doe",
+        relationship: "Spouse",
+        phone: "555-987-6543",
+      },
+      billing: {
+        balance: "$250",
+        lastPayment: "2025-09-01",
+      },
     },
   ];
 
   const renderPatients = patients.map((patient, index) => (
-    <React.Fragment key={index}>
+    <React.Fragment id={index} key={index}>
       <PatientCard patient={patient} />
       <section className="vitals-grid">
         <Card array={patient.vitals} />
       </section>
       <ClinicalCard patient={patient} />
       <TableCard patient={patient.labs} />
+      <AdditionalInfo patient={patient} />
     </React.Fragment>
   ));
 
