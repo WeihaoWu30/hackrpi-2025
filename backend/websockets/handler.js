@@ -7,6 +7,14 @@ export const handleSockets = (wss) => {
    wss.on("connection", (ws) => {
       console.log("Connection Established.");
 
+      ws.send(JSON.stringify({
+         src: ws.physicianName,
+         dst: ws.physicianName,
+         message: "Welcome To WebSocket!",
+         timestamp: new Date().toLocaleTimeString(),
+         type: "welcome",
+      }));
+      
       ws.on("message", async (msg) => {
          let data;
          try {
@@ -68,7 +76,5 @@ export const handleSockets = (wss) => {
             return;
          }
       });
-
-      ws.send("Welcome To WebSocket!");
    });
 }
