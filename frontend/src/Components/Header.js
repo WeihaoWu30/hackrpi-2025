@@ -1,9 +1,52 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import { useTranscript } from "./TranscriptContext";
 import { Link } from "react-router-dom";
+import { useAlert } from "./AlertContext";
 
 export const Header = ({children}) =>{
    const {transcript} = useTranscript();
+   const {alert, updateAlert} = useAlert();
+   const clicked = useRef(false);
+
+   useEffect(() =>{
+      const evtSource = new EventSource(process.env.REACT_APP_BACKEND + "/events");
+      console.log("yurrrr");
+      evtSource.onmessage = (msg) =>{
+         console.log(msg);
+         // const data = JSON.parse(msg.data);
+         if (!clicked.current){
+            document.getElementById("alert-button").click();
+            clicked.current = true;
+         }
+         updateAlert(msg.data);
+      };
+
+      evtSource.onerror = (err) =>{
+         console.log("Error", err);
+      };
+
+      return() =>{
+         evtSource.close();
+      };
+   }, []);
+
+   useEffect(() => {
+      const dismissEl = document.getElementById("offcanvasRight");
+      
+      if (!dismissEl) {
+          return; 
+      }
+  
+      const handleDismiss = () => {
+          clicked.current = false;
+      };
+  
+      dismissEl.addEventListener('hidden.bs.offcanvas', handleDismiss);
+  
+      return () => {
+          dismissEl.removeEventListener('hidden.bs.offcanvas', handleDismiss);
+      };
+  }, []);
 
    return (<><header className="header">
    <h1>EHR System</h1>
@@ -22,7 +65,7 @@ export const Header = ({children}) =>{
       Transcript
    </button>
 
-   <button
+   <button id="alert-button"
       className="btn btn-primary"
       type="button"
       data-bs-toggle="offcanvas"
@@ -49,7 +92,9 @@ export const Header = ({children}) =>{
       aria-label="Close"
    ></button>
    </div>
-   <div className="offcanvas-body">...</div>
+   <div className="offcanvas-body">{alert.map((m, i) =>(
+      <div className="text-danger"key={i}>{m}</div>
+   ))}</div>
    </div>
 
    <div

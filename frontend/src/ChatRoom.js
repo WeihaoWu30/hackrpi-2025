@@ -10,15 +10,17 @@ function ChatRoom() {
   const sender = "Dr. Jeffrey Combs"
   const ws = useRef(null);
 
-useEffect(() =>{
-   const fetch = async() => {
-      const res = await fetch(process.env.REACT_APP_BACKEND + `/message?src=${"You"}&dst=${sender}`)
-   };
-   fetch();
-}, [])
+  
+
+// useEffect(() =>{
+//    const fetch = async() => {
+//       const res = await fetch(process.env.REACT_APP_BACKEND + `/message?src=${"You"}&dst=${sender}`)
+//    };
+//    fetch();
+// }, [])
 
   useEffect(() => {
-   ws = new WebSocket(process.env.REACT_APP_WEBSOCKET);
+   ws.current = new WebSocket(process.env.REACT_APP_WEBSOCKET);
 
    ws.current.onopen = () => {
       console.log("WebSocket connected");
@@ -37,7 +39,7 @@ useEffect(() =>{
    };
 
    return() =>{
-      ws.close();
+      ws.current.close();
    };
    
   }, []);

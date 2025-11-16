@@ -8,6 +8,7 @@ import Speech from "./Components/Speech";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { TranscriptProvider } from "./Components/TranscriptContext";
+import { AlertProvider } from "./Components/AlertContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Add this import
 
@@ -15,6 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
+   <AlertProvider>
     <TranscriptProvider>
       <BrowserRouter>
         <Routes>
@@ -25,6 +27,7 @@ root.render(
         </Routes>
       </BrowserRouter>
     </TranscriptProvider>
+    </AlertProvider>
   </React.StrictMode>
 );
 
