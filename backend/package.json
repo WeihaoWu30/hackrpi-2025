@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/WeihaoWu30/hackrpi-2025#readme",
   "dependencies": {
+    "@google/genai": "^1.29.1",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "firebase": "^12.6.0",
