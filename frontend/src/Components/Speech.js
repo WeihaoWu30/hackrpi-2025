@@ -25,7 +25,7 @@ export default function Speech() {
       stream.current?.getTracks().forEach((track) => track.stop());
       audioContext.current?.close();
       processor.current?.disconnect();
-      await fetch(process.env.REACT_APP_BACKEND, {
+      await fetch(process.env.REACT_APP_BACKEND + "/scribe", {
         method: "POST",
         body: JSON.stringify({ transcript }),
       });
@@ -98,7 +98,7 @@ export default function Speech() {
           aria-hidden="true"
         ></i>
       </button>
-      {/* Manual offcanvas with conditional rendering */}
+      {/* Manual offcanvas with conditional rendering*/}
       {showOffcanvas && (
         <div
           className="offcanvas offcanvas-start show"
@@ -124,6 +124,9 @@ export default function Speech() {
           onClick={() => setShowOffcanvas(false)}
         ></div>
       )}
+        {/* <div className="offcanvas-body">{transcript}</div> */}
+      {/* </div> */}
+      {/* <p>{transcript}</p> */}
     </div>
   );
 }
